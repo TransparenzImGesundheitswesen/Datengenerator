@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Datengenerator
+namespace Datengenerator.XML
 {
-    class Program
+    class XsdValidierer
     {
-        static void Main(string[] args)
-        {
-        }
     }
 }
