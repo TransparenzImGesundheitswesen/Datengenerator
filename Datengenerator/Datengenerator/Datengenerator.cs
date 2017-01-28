@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+using Datengenerator.XML;
 
 namespace Datengenerator
 {
@@ -10,6 +8,11 @@ namespace Datengenerator
     {
         static void Main(string[] args)
         {
+            var validierer = new XsdValidierer();
+            validierer.SchemaHinzufügen(@"XML-Testdateien/ASV.xsd");
+            var istValide = validierer.IstValide(@"XML-Testdateien/ASV.xml");
+            Console.WriteLine(istValide);
+
             Console.WriteLine("Narf!");
             Console.ReadLine();
         }

@@ -50,6 +50,7 @@
     <None Include="App.config" />
     <None Include="XML-Testdateien\ASV.xsd">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
