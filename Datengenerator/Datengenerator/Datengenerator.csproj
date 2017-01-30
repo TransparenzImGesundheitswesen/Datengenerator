@@ -43,6 +43,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Datengenerator.cs" />
+    <Compile Include="Loggen\Logger.cs" />
+    <Compile Include="Loggen\StringExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XML\XsdValidierer.cs" />
   </ItemGroup>
