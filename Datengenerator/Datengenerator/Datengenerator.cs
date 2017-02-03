@@ -1,7 +1,8 @@
 ﻿using System;
 
-using Datengenerator.XML;
+using Datengenerator.Konfig;
 using Datengenerator.Loggen;
+using Datengenerator.XML;
 
 namespace Datengenerator
 {
@@ -9,17 +10,23 @@ namespace Datengenerator
     {
         static void Main(string[] args)
         {
-            string xsdDatei = "XML-Testdateien/ASV.xsd";
-            string xmlDatei = "XML-Testdateien/ASV.xml";
+            foreach (string xsd in Konfiguration.Xsd)
+                Logger.Loggen(string.Format("XSD-Datei: {0}", xsd));
+            Logger.Loggen(string.Format("XML-Datei: {0}", Konfiguration.Xml));
+            Logger.Loggen(string.Format("Validieren: {0}", Konfiguration.Validieren ? "ja" : "nein"));
 
-            var validierer = new XsdValidierer();
-            validierer.SchemaHinzufügen(xsdDatei);
-            var istValide = validierer.IstValide(xmlDatei);
-            Console.WriteLine(istValide);
+            if (Konfiguration.Validieren)
+            {
+                var validierer = new XsdValidierer();
 
-            Logger.Loggen(string.Format("XSD-Datei: {0}", xsdDatei));
-            Logger.Loggen(string.Format("XML-Datei: {0}", xmlDatei));
-            Logger.Loggen(string.Format("valide: {0}", istValide));
+                foreach (string xsd in Konfiguration.Xsd)
+                    validierer.SchemaHinzufügen(xsd);
+                var istValide = validierer.IstValide(Konfiguration.Xml);
+
+                Console.WriteLine(istValide);
+
+                Logger.Loggen(string.Format("Ist valide: {0}", istValide ? "ja" : "nein"));
+            }
 
             Console.WriteLine("Narf!");
             Console.ReadLine();
