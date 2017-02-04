@@ -29,7 +29,7 @@ namespace Datengenerator.Kern
 
             foreach (XElement feldXml in FelderXml.Elements("Feld"))
             {
-                if (feldXml.Elements().Where(m => m.Name == "Konstant").Count() > 0)
+                if (feldXml.Elements("Konstant").Any())
                     feld = new FeldKonstant(feldXml, Random);
                 else
                     feld = new Feld(feldXml, Random);
