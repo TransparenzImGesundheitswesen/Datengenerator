@@ -48,6 +48,7 @@
     <Compile Include="Kern\Feldart.cs" />
     <Compile Include="Kern\Feldeigenschaft.cs" />
     <Compile Include="Kern\FeldEnum.cs" />
+    <Compile Include="Kern\FeldHash.cs" />
     <Compile Include="Kern\FeldKonstant.cs" />
     <Compile Include="Kern\Zeile.cs" />
     <Compile Include="Konfig\Konfig.cs" />

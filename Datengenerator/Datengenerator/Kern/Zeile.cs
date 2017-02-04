@@ -33,6 +33,8 @@ namespace Datengenerator.Kern
                     feld = new FeldKonstant(feldXml, Random);
                 else if (feldXml.Elements("ZulässigeWerte").Any())
                     feld = new FeldEnum(feldXml, Random);
+                else if (feldXml.Element("Erläuterung").Value.Contains("Pseudonym"))
+                    feld = new FeldHash(feldXml, Random);
                 else
                     feld = new Feld(feldXml, Random);
 
