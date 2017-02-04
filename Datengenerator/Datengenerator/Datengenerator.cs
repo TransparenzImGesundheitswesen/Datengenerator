@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Xml.Linq;
+using System.Collections.Generic;
 
+using Datengenerator.Kern;
 using Datengenerator.Konfig;
 using Datengenerator.Loggen;
 using Datengenerator.XML;
@@ -26,6 +29,15 @@ namespace Datengenerator
                 Console.WriteLine(istValide);
 
                 Logger.Loggen(string.Format("Ist valide: {0}", istValide ? "ja" : "nein"));
+            }
+
+            XElement xml = XElement.Load(Konfiguration.Xml);
+            IEnumerable<XElement> satzartenXml = xml.Descendants("Satzarten");
+
+            foreach (XElement satzartXml in satzartenXml.Elements("Satzart"))
+            {
+                Datei datei = new Datei(satzartXml);
+                datei.Generieren(100000);
             }
 
             Console.WriteLine("Narf!");

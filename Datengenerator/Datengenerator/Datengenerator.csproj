@@ -43,6 +43,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Datengenerator.cs" />
+    <Compile Include="Kern\Datei.cs" />
+    <Compile Include="Kern\Feld.cs" />
+    <Compile Include="Kern\Feldart.cs" />
+    <Compile Include="Kern\Feldeigenschaft.cs" />
+    <Compile Include="Kern\FeldKonstant.cs" />
+    <Compile Include="Kern\Zeile.cs" />
     <Compile Include="Konfig\Konfig.cs" />
     <Compile Include="Loggen\Logger.cs" />
     <Compile Include="Loggen\StringExtension.cs" />
