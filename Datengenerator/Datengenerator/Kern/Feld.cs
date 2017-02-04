@@ -22,6 +22,7 @@ namespace Datengenerator.Kern
         {
             Nummer = xml.Attribute("Nummer").Value;
             Name = xml.Element("Name").Value;
+            Art = (Feldart)Enum.Parse(typeof(Feldart), xml.Element("Art").Value);
 
             Random = r;
 
@@ -33,12 +34,17 @@ namespace Datengenerator.Kern
 
         public virtual string Generieren()
         {
-            switch (Format)
+            if (Art == Feldart.K && Random.Next(0, 2) == 0)
+                return "";
+            else
             {
-                case "JJJJQ":
-                    return string.Format("2017{0}", Random.Next(1, 5));
-                default:
-                    return "Narf";
+                switch (Format)
+                {
+                    case "JJJJQ":
+                        return string.Format("2017{0}", Random.Next(1, 5));
+                    default:
+                        return "Narf";
+                }
             }
         }
     }
