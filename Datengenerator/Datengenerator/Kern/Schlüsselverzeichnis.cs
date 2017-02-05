@@ -10,7 +10,7 @@ namespace Datengenerator.Kern
         public Schlüsselverzeichnis(string name)
         {
             Name = name;
-            Einträge = new List<string>(System.IO.File.ReadAllLines(string.Format("{0}.csv", Name)));
+            Einträge = new List<string>(System.IO.File.ReadAllLines(string.Format("XML-Testdateien/{0}.csv", Name)));
         }
     }
 }
