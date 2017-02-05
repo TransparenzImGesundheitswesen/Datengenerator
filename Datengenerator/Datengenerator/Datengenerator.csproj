@@ -65,7 +65,7 @@
     <None Include="Datengenerator.konfig">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="IK_Anlage_3.csv">
+    <None Include="XML-Testdateien\IK_Anlage_3.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="XML-Testdateien\ASV.xsd">
