@@ -32,8 +32,11 @@ namespace Datengenerator
             }
 
             XElement xml = XElement.Load(Konfiguration.Xml);
-            IEnumerable<XElement> satzartenXml = xml.Descendants("Satzarten");
 
+            IEnumerable<XElement> schlüsselverzeichnisseXml = xml.Descendants("Schlüsselverzeichnisse");
+            Schlüsselverzeichnismanager.SchlüsselverzeichnisseHinzufügen(schlüsselverzeichnisseXml);
+
+            IEnumerable<XElement> satzartenXml = xml.Descendants("Satzarten");
             foreach (XElement satzartXml in satzartenXml.Elements("Satzart"))
             {
                 Datei datei = new Datei(satzartXml);

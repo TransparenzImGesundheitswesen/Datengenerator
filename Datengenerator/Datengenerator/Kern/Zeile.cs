@@ -35,6 +35,8 @@ namespace Datengenerator.Kern
                     feld = new FeldEnum(feldXml, Random);
                 else if (feldXml.Element("Erläuterung").Value.Contains("Pseudonym"))
                     feld = new FeldHash(feldXml, Random);
+                else if (feldXml.Element("Erläuterung").Value.Contains("Institutionskennzeichen"))
+                    feld = new FeldIK(feldXml, Random);
                 else
                     feld = new Feld(feldXml, Random);
 

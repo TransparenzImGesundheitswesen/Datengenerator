@@ -1,6 +1,7 @@
 # XML- und XSD-Dateien vorerst ausschlieﬂen
 *.xml
 *.xsd
+*.csv
 
 
 # Von hier ab die von Visual Studio generierten Eintr‰ge
@@ -257,3 +258,4 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
+
