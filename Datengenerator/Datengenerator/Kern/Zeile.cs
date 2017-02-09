@@ -42,6 +42,8 @@ namespace Datengenerator.Kern
                         feld = new FeldIK(feldXml, Random);
                     else if (feldXml.Attributes("Typ").First().Value == "KV")
                         feld = new FeldKV(feldXml, Random);
+                    else if (feldXml.Attributes("Typ").First().Value == "PLZ")
+                        feld = new FeldPLZ(feldXml, Random);
                 }
 
                 zeile += feld.Generieren() + Feldtrennzeichen;
