@@ -50,6 +50,7 @@
     <Compile Include="Kern\FeldEnum.cs" />
     <Compile Include="Kern\FeldHash.cs" />
     <Compile Include="Kern\FeldIK.cs" />
+    <Compile Include="Kern\FeldKalTag.cs" />
     <Compile Include="Kern\FeldKonstant.cs" />
     <Compile Include="Kern\FeldKV.cs" />
     <Compile Include="Kern\FeldPLZ.cs" />
