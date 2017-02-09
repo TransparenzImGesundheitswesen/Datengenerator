@@ -13,13 +13,15 @@ namespace Datengenerator.Kern
         public string Zeilentrennzeichen;
         public XElement FelderXml;
         public readonly Random Random;
+        public readonly RandomProportional RandomProp;
 
-        public Zeile(string feldtrennzeichen, string zeilentrennzeichen, XElement felderXml, Random r)
+        public Zeile(string feldtrennzeichen, string zeilentrennzeichen, XElement felderXml, Random r, RandomProportional rp)
         {
             Feldtrennzeichen = feldtrennzeichen;
             Zeilentrennzeichen = zeilentrennzeichen;
             FelderXml = felderXml;
             Random = r;
+            RandomProp = rp;
         }
 
         public string Generieren()
@@ -46,6 +48,8 @@ namespace Datengenerator.Kern
                         feld = new FeldPLZ(feldXml, Random);
                     else if (feldXml.Attributes("Typ").First().Value == "KalTag")
                         feld = new FeldKalTag(feldXml, Random);
+                    else if (feldXml.Attributes("Typ").First().Value == "VsTage")
+                        feld = new FeldVsTage(feldXml, RandomProp);
                 }
 
                 zeile += feld.Generieren() + Feldtrennzeichen;

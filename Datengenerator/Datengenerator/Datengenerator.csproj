@@ -54,6 +54,8 @@
     <Compile Include="Kern\FeldKonstant.cs" />
     <Compile Include="Kern\FeldKV.cs" />
     <Compile Include="Kern\FeldPLZ.cs" />
+    <Compile Include="Kern\FeldVsTage.cs" />
+    <Compile Include="Kern\RandomProportional.cs" />
     <Compile Include="Kern\Schlüsselverzeichnis.cs" />
     <Compile Include="Kern\Schlüsselverzeichnismanager.cs" />
     <Compile Include="Kern\Zeile.cs" />

@@ -26,12 +26,13 @@ namespace Datengenerator.Kern
         public void Generieren(int zeilenzahl)
         {
             Random r = new Random();
+            RandomProportional rp = new RandomProportional();
 
             using (System.IO.StreamWriter datei = new System.IO.StreamWriter(string.Format("{0}_.{1}", Satzartname, Endung).ZeitstempelAnhängen(), true))
             {
                 for (int i = 0; i < zeilenzahl; i++)
                 {
-                    datei.Write(new Zeile(Feldtrennzeichen, Zeilentrennzeichen, SatzartXml.Element("Felder"), r).Generieren());
+                    datei.Write(new Zeile(Feldtrennzeichen, Zeilentrennzeichen, SatzartXml.Element("Felder"), r, rp).Generieren());
                 }
             }
         }
