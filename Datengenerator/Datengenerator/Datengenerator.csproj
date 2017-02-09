@@ -51,6 +51,7 @@
     <Compile Include="Kern\FeldHash.cs" />
     <Compile Include="Kern\FeldIK.cs" />
     <Compile Include="Kern\FeldKonstant.cs" />
+    <Compile Include="Kern\FeldKV.cs" />
     <Compile Include="Kern\Schlüsselverzeichnis.cs" />
     <Compile Include="Kern\Schlüsselverzeichnismanager.cs" />
     <Compile Include="Kern\Zeile.cs" />

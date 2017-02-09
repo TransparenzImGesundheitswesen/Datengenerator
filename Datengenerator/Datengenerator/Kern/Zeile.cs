@@ -40,6 +40,8 @@ namespace Datengenerator.Kern
                         feld = new FeldHash(feldXml, Random);
                     else if (feldXml.Attributes("Typ").First().Value == "IK")
                         feld = new FeldIK(feldXml, Random);
+                    else if (feldXml.Attributes("Typ").First().Value == "KV")
+                        feld = new FeldKV(feldXml, Random);
                 }
 
                 zeile += feld.Generieren() + Feldtrennzeichen;
