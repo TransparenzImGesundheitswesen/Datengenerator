@@ -9,7 +9,7 @@ namespace Datengenerator.Loggen
         {
             return string.Concat(
                 Path.GetFileNameWithoutExtension(dateiname),
-                    DateTime.Now.ToString("yyyy-MM-dd_HHmmss_z"),
+                    DateTime.Now.ToString("yyyy-MM-dd_HHmmssz"),
                     Path.GetExtension(dateiname)
                 );
         }
