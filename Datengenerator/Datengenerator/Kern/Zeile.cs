@@ -25,20 +25,22 @@ namespace Datengenerator.Kern
         public string Generieren()
         {
             string zeile = "";
-            Feld feld;
 
             foreach (XElement feldXml in FelderXml.Elements("Feld"))
             {
+                Feld feld = new Feld(feldXml, Random);
+
                 if (feldXml.Elements("Konstant").Any())
                     feld = new FeldKonstant(feldXml, Random);
                 else if (feldXml.Elements("ZulässigeWerte").Any())
                     feld = new FeldEnum(feldXml, Random);
-                else if (feldXml.Element("Erläuterung").Value.Contains("Pseudonym"))
-                    feld = new FeldHash(feldXml, Random);
-                else if (feldXml.Element("Erläuterung").Value.Contains("Institutionskennzeichen"))
-                    feld = new FeldIK(feldXml, Random);
-                else
-                    feld = new Feld(feldXml, Random);
+                else if (feldXml.Attributes("Typ").Any())
+                {
+                    if (feldXml.Attributes("Typ").First().Value == "Hash")
+                        feld = new FeldHash(feldXml, Random);
+                    else if (feldXml.Attributes("Typ").First().Value == "IK")
+                        feld = new FeldIK(feldXml, Random);
+                }
 
                 zeile += feld.Generieren() + Feldtrennzeichen;
             }
