@@ -32,27 +32,34 @@ namespace Datengenerator.Kern
             {
                 Feld feld = new Feld(feldXml, Random);
 
-                if (feldXml.Elements("Konstant").Any())
-                    feld = new FeldKonstant(feldXml, Random);
-                else if (feldXml.Elements("ZulässigeWerte").Any())
-                    feld = new FeldEnum(feldXml, Random);
-                else if (feldXml.Attributes("Typ").Any())
+                if (feld.Art == Feldart.K && Random.Next(0, 2) == 0)
+                    zeile += "" + Feldtrennzeichen;
+                else
                 {
-                    if (feldXml.Attributes("Typ").First().Value == "Hash")
-                        feld = new FeldHash(feldXml, Random);
-                    else if (feldXml.Attributes("Typ").First().Value == "IK")
-                        feld = new FeldIK(feldXml, Random);
-                    else if (feldXml.Attributes("Typ").First().Value == "KV")
-                        feld = new FeldKV(feldXml, Random);
-                    else if (feldXml.Attributes("Typ").First().Value == "PLZ")
-                        feld = new FeldPLZ(feldXml, Random);
-                    else if (feldXml.Attributes("Typ").First().Value == "KalTag")
-                        feld = new FeldKalTag(feldXml, Random);
-                    else if (feldXml.Attributes("Typ").First().Value == "VsTage")
-                        feld = new FeldVsTage(feldXml, RandomProp);
+
+                    if (feldXml.Elements("Konstant").Any())
+                        feld = new FeldKonstant(feldXml, Random);
+                    else if (feldXml.Elements("ZulässigeWerte").Any())
+                        feld = new FeldEnum(feldXml, Random);
+                    else if (feldXml.Attributes("Typ").Any())
+                    {
+                        if (feldXml.Attributes("Typ").First().Value == "Hash")
+                            feld = new FeldHash(feldXml, Random);
+                        else if (feldXml.Attributes("Typ").First().Value == "IK")
+                            feld = new FeldIK(feldXml, Random);
+                        else if (feldXml.Attributes("Typ").First().Value == "KV")
+                            feld = new FeldKV(feldXml, Random);
+                        else if (feldXml.Attributes("Typ").First().Value == "PLZ")
+                            feld = new FeldPLZ(feldXml, Random);
+                        else if (feldXml.Attributes("Typ").First().Value == "KalTag")
+                            feld = new FeldKalTag(feldXml, Random);
+                        else if (feldXml.Attributes("Typ").First().Value == "VsTage")
+                            feld = new FeldVsTage(feldXml, RandomProp);
+                    }
+
+                    zeile += feld.Generieren() + Feldtrennzeichen;
                 }
 
-                zeile += feld.Generieren() + Feldtrennzeichen;
             }
 
             zeile = zeile.Substring(0, zeile.Length - 1) + Zeilentrennzeichen;

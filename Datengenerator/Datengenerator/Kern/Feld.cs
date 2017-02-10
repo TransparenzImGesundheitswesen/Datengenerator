@@ -31,17 +31,12 @@ namespace Datengenerator.Kern
 
         public virtual string Generieren()
         {
-            if (Art == Feldart.K && Random.Next(0, 2) == 0)
-                return "";
-            else
+            switch (Format)
             {
-                switch (Format)
-                {
-                    case "JJJJQ":
-                        return string.Format("2017{0}", Random.Next(1, 5));
-                    default:
-                        return "Narf";
-                }
+                case "JJJJQ":
+                    return string.Format("2017{0}", Random.Next(1, 5));
+                default:
+                    return "Narf";
             }
         }
     }
