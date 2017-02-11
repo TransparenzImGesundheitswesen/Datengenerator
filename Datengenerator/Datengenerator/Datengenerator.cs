@@ -40,7 +40,7 @@ namespace Datengenerator
             foreach (XElement satzartXml in satzartenXml.Elements("Satzart"))
             {
                 Datei datei = new Datei(satzartXml);
-                datei.Generieren(100000);
+                datei.Generieren(Konfiguration.AnzahlZeilen);
             }
 
             Console.WriteLine("Narf!");

@@ -8,6 +8,7 @@ namespace Datengenerator.Konfig
         public static readonly List<string> Xsd = new List<string>();
         public static readonly string Xml;
         public static readonly bool Validieren;
+        public static readonly int AnzahlZeilen;
 
         static Konfiguration()
         {
@@ -27,6 +28,9 @@ namespace Datengenerator.Konfig
                         break;
                     case "Validieren":
                         Validieren = Convert.ToBoolean(int.Parse(komponenten[1].Trim()));
+                        break;
+                    case "AnzahlZeilen":
+                        AnzahlZeilen = int.Parse(komponenten[1].Trim());
                         break;
                 }
             }
