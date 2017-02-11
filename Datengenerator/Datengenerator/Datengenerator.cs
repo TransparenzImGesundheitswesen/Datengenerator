@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Collections.Generic;
 
@@ -37,11 +38,12 @@ namespace Datengenerator
             Schlüsselverzeichnismanager.SchlüsselverzeichnisseHinzufügen(schlüsselverzeichnisseXml);
 
             IEnumerable<XElement> satzartenXml = xml.Descendants("Satzarten");
-            foreach (XElement satzartXml in satzartenXml.Elements("Satzart"))
+            //foreach (XElement satzartXml in satzartenXml.Elements("Satzart"))
+            Parallel.ForEach(satzartenXml.Elements("Satzart"), satzartXml =>
             {
                 Datei datei = new Datei(satzartXml);
                 datei.Generieren(Konfiguration.AnzahlZeilen);
-            }
+            });
 
             Console.WriteLine("Narf!");
             Console.ReadLine();
