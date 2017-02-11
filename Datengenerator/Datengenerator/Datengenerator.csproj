@@ -49,6 +49,7 @@
     <Compile Include="Kern\Feldeigenschaft.cs" />
     <Compile Include="Kern\FeldEnum.cs" />
     <Compile Include="Kern\FeldHash.cs" />
+    <Compile Include="Kern\FeldICD.cs" />
     <Compile Include="Kern\FeldIK.cs" />
     <Compile Include="Kern\FeldKalTag.cs" />
     <Compile Include="Kern\FeldKonstant.cs" />
@@ -68,6 +69,9 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="Datengenerator.konfig">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="XML-Testdateien\ICD.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="XML-Testdateien\IK_Anlage_3.csv">

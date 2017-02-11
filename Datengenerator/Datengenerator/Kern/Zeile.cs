@@ -55,6 +55,8 @@ namespace Datengenerator.Kern
                             feld = new FeldKalTag(feldXml, Random);
                         else if (feldXml.Attributes("Typ").First().Value == "VsTage")
                             feld = new FeldVsTage(feldXml, RandomProp);
+                        else if (feldXml.Attributes("Typ").First().Value == "ICD")
+                            feld = new FeldICD(feldXml, Random);
                     }
 
                     zeile += feld.Generieren() + Feldtrennzeichen;
