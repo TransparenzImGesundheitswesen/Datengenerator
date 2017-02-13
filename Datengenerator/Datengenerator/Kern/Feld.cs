@@ -35,6 +35,8 @@ namespace Datengenerator.Kern
             {
                 case "JJJJQ":
                     return string.Format("2017{0}", Random.Next(1, 5));
+                case "JJJJMMTT":
+                    return string.Format("2017{0:00}01", Random.Next(1, 13));
                 default:
                     return "Narf";
             }
