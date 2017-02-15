@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 
@@ -14,6 +15,9 @@ namespace Datengenerator.Kern
         public string Format;
         public string Erläuterung;
         public readonly Random Random;
+
+        private List<string> blindtexte = new List<string> { "Narf", "Troz", "Zort", "Fjort", "Poit" };
+
 
         public Feld(XElement xml, Random r)
         {
@@ -38,7 +42,7 @@ namespace Datengenerator.Kern
                 case "JJJJMMTT":
                     return string.Format("2017{0:00}01", Random.Next(1, 13));
                 default:
-                    return "Narf";
+                    return blindtexte[Random.Next(0, blindtexte.Count)];
             }
         }
     }
