@@ -59,6 +59,8 @@ namespace Datengenerator.Kern
                             feld = new FeldICD(feldXml, Random);
                         else if (feldXml.Attributes("Typ").First().Value == "FGCode")
                             feld = new FeldFGCode(feldXml, Random);
+                        else if (feldXml.Attributes("Typ").First().Value == "GOP")
+                            feld = new FeldGOP(feldXml, Random);
                     }
 
                     zeile += feld.Generieren() + Feldtrennzeichen;
