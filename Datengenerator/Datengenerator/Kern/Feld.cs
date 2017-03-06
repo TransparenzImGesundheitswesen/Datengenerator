@@ -10,7 +10,6 @@ namespace Datengenerator.Kern
         public string Nummer;
         public string Name;
         public Feldart Art;
-        public int Stellen;
         public Feldeigenschaft Eigenschaft;
         public string Format;
         public string Erläuterung;

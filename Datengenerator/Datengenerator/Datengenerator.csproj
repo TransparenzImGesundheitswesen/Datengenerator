@@ -50,6 +50,7 @@
     <Compile Include="Kern\FeldEnum.cs" />
     <Compile Include="Kern\FeldFGCode.cs" />
     <Compile Include="Kern\FeldGanzzahl.cs" />
+    <Compile Include="Kern\FeldGebrZahl.cs" />
     <Compile Include="Kern\FeldGOP.cs" />
     <Compile Include="Kern\FeldHash.cs" />
     <Compile Include="Kern\FeldICD.cs" />

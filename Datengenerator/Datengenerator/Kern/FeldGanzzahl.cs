@@ -5,6 +5,8 @@ namespace Datengenerator.Kern
 {
     class FeldGanzzahl : Feld
     {
+        public int Stellen;
+
         public FeldGanzzahl(XElement xml, Random r) : base(xml, r)
         {
             Stellen = int.Parse(xml.Element("Stellen").Value.Replace("<=", ""));
