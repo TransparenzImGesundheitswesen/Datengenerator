@@ -27,13 +27,23 @@ namespace Datengenerator.Kern
         public string Generieren()
         {
             string zeile = "";
+            Dictionary<string, string> feldliste = new Dictionary<string, string>();
 
             foreach (XElement feldXml in FelderXml.Elements("Feld"))
             {
                 Feld feld = new Feld(feldXml, Random);
 
-                if (feld.Art == Feldart.K && Random.Next(0, 2) == 0)
+                if (
+                    (feld.Art == Feldart.m // Bedingtes Muss-Feld
+                        && feldliste[feldXml.Descendants("BedingungFeld").Select(m => m.Value).First()] != feldXml.Descendants("BedingungWert").Select(m => m.Value).First())
+                    ||
+                    (feld.Art == Feldart.K // Kann-Feld
+                        && Random.Next(0, 2) == 0)
+                   )
+                {
                     zeile += "" + Feldtrennzeichen;
+                    feldliste.Add(feld.Nummer, "");
+                }
                 else
                 {
 
@@ -67,7 +77,9 @@ namespace Datengenerator.Kern
                             feld = new FeldGebrZahl(feldXml, Random);
                     }
 
-                    zeile += feld.Generieren() + Feldtrennzeichen;
+                    string wert = feld.Generieren();
+                    feldliste.Add(feld.Nummer, wert);
+                    zeile += wert + Feldtrennzeichen;
                 }
 
             }
