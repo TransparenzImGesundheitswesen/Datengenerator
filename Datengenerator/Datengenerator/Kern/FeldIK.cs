@@ -7,14 +7,22 @@ namespace Datengenerator.Kern
     {
         public string SchlüsselverzeichnisName;
 
-        public FeldIK(XElement xml, Random r) : base(xml, r)
+        public FeldIK(XElement xml, Random r, int schlechtdatenWahrscheinlichkeit) : base(xml, r, schlechtdatenWahrscheinlichkeit)
         {
             SchlüsselverzeichnisName = xml.Element("Schlüsselverzeichnis").Value;
         }
 
         public override string Generieren()
         {
-            return Schlüsselverzeichnismanager.ZufälligerEintrag(SchlüsselverzeichnisName);
+            if (SchlechtdatenGenerieren && Random.Next(0, SchlechtdatenWahrscheinlichkeit) == 0)
+            {
+                if (Random.Next(0, 2) == 0)
+                    return "ABC";
+                else
+                    return "012345678";
+            }
+            else
+                return Schlüsselverzeichnismanager.ZufälligerEintrag(SchlüsselverzeichnisName);
         }
     }
 }
