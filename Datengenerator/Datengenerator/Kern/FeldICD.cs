@@ -7,14 +7,22 @@ namespace Datengenerator.Kern
     {
         public string SchlüsselverzeichnisName;
 
-        public FeldICD(XElement xml, Random r) : base(xml, r)
+        public FeldICD(XElement xml, Random r, int schlechtdatenWahrscheinlichkeit) : base(xml, r, schlechtdatenWahrscheinlichkeit)
         {
             SchlüsselverzeichnisName = "ICD";
         }
 
         public override string Generieren()
         {
-            return Schlüsselverzeichnismanager.ZufälligerEintrag(SchlüsselverzeichnisName);
+            if (SchlechtdatenGenerieren && Random.Next(0, SchlechtdatenWahrscheinlichkeit) == 0)
+            {
+                if (Random.Next(0, 2) == 0)
+                    return "AB"; // zu kurz
+                else
+                    return "F5E3155D5FF48"; // zu lang
+            }
+            else
+                return Schlüsselverzeichnismanager.ZufälligerEintrag(SchlüsselverzeichnisName);
         }
     }
 }

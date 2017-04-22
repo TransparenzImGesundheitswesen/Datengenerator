@@ -69,7 +69,7 @@ namespace Datengenerator.Kern
                         else if (feldXml.Attributes("Typ").First().Value == "VsTage")
                             feld = new FeldVsTage(feldXml, RandomProp);
                         else if (feldXml.Attributes("Typ").First().Value == "ICD")
-                            feld = new FeldICD(feldXml, Random);
+                            feld = new FeldICD(feldXml, Random, schlechtdatenWahrscheinlichkeit);
                         else if (feldXml.Attributes("Typ").First().Value == "FGCode")
                             feld = new FeldFGCode(feldXml, Random, schlechtdatenWahrscheinlichkeit);
                         else if (feldXml.Attributes("Typ").First().Value == "GOP")
