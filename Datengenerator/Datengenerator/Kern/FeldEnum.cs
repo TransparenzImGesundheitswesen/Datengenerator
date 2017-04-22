@@ -9,14 +9,17 @@ namespace Datengenerator.Kern
     {
         public List<string> ZulässigeWerte;
 
-        public FeldEnum(XElement xml, Random r) : base(xml, r)
+        public FeldEnum(XElement xml, Random r, bool schlechtdatenGenerieren) : base(xml, r, schlechtdatenGenerieren)
         {
             ZulässigeWerte = xml.Descendants("Wert").Select(m => m.Value).ToList();
         }
 
         public override string Generieren()
         {
-            return ZulässigeWerte[Random.Next(0, ZulässigeWerte.Count)];
+            if (SchlechtdatenGenerieren && Random.Next(0, SchlechtdatenWahrscheinlichkeit) == 0)
+                return "999";
+            else
+                return ZulässigeWerte[Random.Next(0, ZulässigeWerte.Count)];
         }
     }
 }

@@ -50,7 +50,7 @@ namespace Datengenerator.Kern
                     if (feldXml.Elements("Konstant").Any())
                         feld = new FeldKonstant(feldXml, Random);
                     else if (feldXml.Elements("ZulässigeWerte").Any())
-                        feld = new FeldEnum(feldXml, Random);
+                        feld = new FeldEnum(feldXml, Random, schlechtdatenGenerieren);
                     else if (feldXml.Attributes("Typ").Any())
                     {
                         if (feldXml.Attributes("Typ").First().Value == "Hash")
