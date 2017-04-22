@@ -51,7 +51,7 @@ namespace Datengenerator.Kern
                 {
 
                     if (feldXml.Elements("Konstant").Any())
-                        feld = new FeldKonstant(feldXml, Random);
+                        feld = new FeldKonstant(feldXml, Random, schlechtdatenWahrscheinlichkeit);
                     else if (feldXml.Elements("ZulässigeWerte").Any())
                         feld = new FeldEnum(feldXml, Random, schlechtdatenWahrscheinlichkeit);
                     else if (feldXml.Attributes("Typ").Any())

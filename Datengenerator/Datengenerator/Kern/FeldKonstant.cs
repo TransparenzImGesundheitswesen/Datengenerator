@@ -7,14 +7,17 @@ namespace Datengenerator.Kern
     {
         public string Konstant;
 
-        public FeldKonstant(XElement xml, Random r) : base(xml, r)
+        public FeldKonstant(XElement xml, Random r, int schlechtdatenWahrscheinlichkeit) : base(xml, r, schlechtdatenWahrscheinlichkeit)
         {
             Konstant = xml.Element("Konstant").Value;
         }
 
         public override string Generieren()
         {
-            return Konstant;
+            if (SchlechtdatenGenerieren && Random.Next(0, SchlechtdatenWahrscheinlichkeit) == 0)
+                return "Narf!";
+            else
+                return Konstant;
         }
     }
 }
