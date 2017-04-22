@@ -16,6 +16,7 @@ namespace Datengenerator.Kern
 
         public readonly Random Random;
         public readonly bool SchlechtdatenGenerieren;
+        public readonly int SchlechtdatenWahrscheinlichkeit = 1000;
 
         private List<string> blindtexte = new List<string> { "Narf", "Troz", "Zort", "Fjort", "Poit" };
 
@@ -44,12 +45,28 @@ namespace Datengenerator.Kern
             switch (Format)
             {
                 case "JJJJQ":
-                    return string.Format("2017{0}", Random.Next(1, 5));
+                    return GenerierenQuartal();
                 case "JJJJMMTT":
-                    return string.Format("2017{0:00}01", Random.Next(1, 13));
+                    return GenerierenDatum();
                 default:
                     return blindtexte[Random.Next(0, blindtexte.Count)];
             }
+        }
+
+        private string GenerierenQuartal()
+        {
+            if (SchlechtdatenGenerieren && Random.Next(0, SchlechtdatenWahrscheinlichkeit) == 0)
+                return "QQQQQ";
+            else
+                return string.Format("2017{0}", Random.Next(1, 5));
+        }
+
+        private string GenerierenDatum()
+        {
+            if (SchlechtdatenGenerieren && Random.Next(0, SchlechtdatenWahrscheinlichkeit) == 0)
+                return "JJJJMMTT";
+            else
+                return string.Format("2017{0:00}01", Random.Next(1, 13));
         }
     }
 }
