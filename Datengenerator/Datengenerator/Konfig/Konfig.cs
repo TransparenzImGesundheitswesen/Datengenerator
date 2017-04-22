@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Datengenerator.Konfig
 {
@@ -15,7 +16,7 @@ namespace Datengenerator.Konfig
         {
             List<string> einträge = new List<string>(System.IO.File.ReadAllLines("Datengenerator.konfig"));
 
-            foreach (string eintrag in einträge)
+            foreach (string eintrag in einträge.Where(m => m.Length > 0 && m.Substring(0, 1) != "#"))
             {
                 string[] komponenten = eintrag.Split(':');
 
