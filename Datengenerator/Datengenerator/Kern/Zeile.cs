@@ -39,6 +39,9 @@ namespace Datengenerator.Kern
                     ||
                     (feld.Art == Feldart.K // Kann-Feld
                         && Random.Next(0, 2) == 0)
+                    ||
+                    (feld.Art == Feldart.M && schlechtdatenWahrscheinlichkeit > 0 // Muss-Feld und Schlechtdaten aktiviert
+                        && Random.Next(0, schlechtdatenWahrscheinlichkeit) == 0)
                    )
                 {
                     zeile += "" + Feldtrennzeichen;
