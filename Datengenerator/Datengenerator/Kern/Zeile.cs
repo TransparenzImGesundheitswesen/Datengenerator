@@ -24,14 +24,14 @@ namespace Datengenerator.Kern
             RandomProp = rp;
         }
 
-        public string Generieren(bool schlechtdatenGenerieren)
+        public string Generieren(int schlechtdatenWahrscheinlichkeit)
         {
             string zeile = "";
             Dictionary<string, string> feldliste = new Dictionary<string, string>();
 
             foreach (XElement feldXml in FelderXml.Elements("Feld"))
             {
-                Feld feld = new Feld(feldXml, Random, schlechtdatenGenerieren);
+                Feld feld = new Feld(feldXml, Random, schlechtdatenWahrscheinlichkeit);
 
                 if (
                     (feld.Art == Feldart.m // Bedingtes Muss-Feld
@@ -50,7 +50,7 @@ namespace Datengenerator.Kern
                     if (feldXml.Elements("Konstant").Any())
                         feld = new FeldKonstant(feldXml, Random);
                     else if (feldXml.Elements("ZulässigeWerte").Any())
-                        feld = new FeldEnum(feldXml, Random, schlechtdatenGenerieren);
+                        feld = new FeldEnum(feldXml, Random, schlechtdatenWahrscheinlichkeit);
                     else if (feldXml.Attributes("Typ").Any())
                     {
                         if (feldXml.Attributes("Typ").First().Value == "Hash")
@@ -68,7 +68,7 @@ namespace Datengenerator.Kern
                         else if (feldXml.Attributes("Typ").First().Value == "ICD")
                             feld = new FeldICD(feldXml, Random);
                         else if (feldXml.Attributes("Typ").First().Value == "FGCode")
-                            feld = new FeldFGCode(feldXml, Random, schlechtdatenGenerieren);
+                            feld = new FeldFGCode(feldXml, Random, schlechtdatenWahrscheinlichkeit);
                         else if (feldXml.Attributes("Typ").First().Value == "GOP")
                             feld = new FeldGOP(feldXml, Random);
                         else if (feldXml.Attributes("Typ").First().Value == "Ganzzahl")

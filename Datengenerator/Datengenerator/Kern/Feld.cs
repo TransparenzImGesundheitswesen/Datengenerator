@@ -16,19 +16,20 @@ namespace Datengenerator.Kern
 
         public readonly Random Random;
         public readonly bool SchlechtdatenGenerieren;
-        public readonly int SchlechtdatenWahrscheinlichkeit = 1000;
+        public readonly int SchlechtdatenWahrscheinlichkeit;
 
         private List<string> blindtexte = new List<string> { "Narf", "Troz", "Zort", "Fjort", "Poit" };
 
 
-        public Feld(XElement xml, Random r, bool schlechtdatenGenerieren)
+        public Feld(XElement xml, Random r, int schlechtdatenWahrscheinlichkeit)
         {
             Nummer = xml.Attribute("Nummer").Value;
             Name = xml.Element("Name").Value;
             Art = (Feldart)Enum.Parse(typeof(Feldart), xml.Element("Art").Value);
 
             Random = r;
-            SchlechtdatenGenerieren = schlechtdatenGenerieren;
+            SchlechtdatenGenerieren = schlechtdatenWahrscheinlichkeit != 0;
+            SchlechtdatenWahrscheinlichkeit = schlechtdatenWahrscheinlichkeit;
 
             if (xml.Elements("Format").Any())
                 Format = xml.Element("Format").Value;
@@ -36,7 +37,7 @@ namespace Datengenerator.Kern
                 Format = "";
         }
 
-        public Feld(XElement xml, Random r) : this(xml, r, false)
+        public Feld(XElement xml, Random r) : this(xml, r, 0)
         {
         }
 

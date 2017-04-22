@@ -3,6 +3,6 @@ XML: XML-Testdateien/ASV.xml
 
 Validieren: 1
 
-SchlechtdatenGenerieren: 1
+SchlechtdatenWahrscheinlichkeit: 10000
 
 AnzahlZeilen: 50000

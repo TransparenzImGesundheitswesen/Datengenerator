@@ -23,7 +23,7 @@ namespace Datengenerator.Kern
             Satzartname = SatzartXml.Attribute("Name").Value;
         }
 
-        public void Generieren(int zeilenzahl, bool schlechtdatenGenerieren)
+        public void Generieren(int zeilenzahl, int schlechtdatenWahrscheinlichkeit)
         {
             Random r = new Random();
             RandomProportional rp = new RandomProportional();
@@ -32,7 +32,7 @@ namespace Datengenerator.Kern
             {
                 for (int i = 0; i < zeilenzahl; i++)
                 {
-                    datei.Write(new Zeile(Feldtrennzeichen, Zeilentrennzeichen, SatzartXml.Element("Felder"), r, rp).Generieren(schlechtdatenGenerieren));
+                    datei.Write(new Zeile(Feldtrennzeichen, Zeilentrennzeichen, SatzartXml.Element("Felder"), r, rp).Generieren(schlechtdatenWahrscheinlichkeit));
                 }
             }
         }
