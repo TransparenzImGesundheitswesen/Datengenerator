@@ -73,7 +73,7 @@ namespace Datengenerator.Kern
                         else if (feldXml.Attributes("Typ").First().Value == "FGCode")
                             feld = new FeldFGCode(feldXml, Random, schlechtdatenWahrscheinlichkeit);
                         else if (feldXml.Attributes("Typ").First().Value == "GOP")
-                            feld = new FeldGOP(feldXml, Random);
+                            feld = new FeldGOP(feldXml, Random, schlechtdatenWahrscheinlichkeit);
                         else if (feldXml.Attributes("Typ").First().Value == "Ganzzahl")
                             feld = new FeldGanzzahl(feldXml, Random, schlechtdatenWahrscheinlichkeit);
                         else if (feldXml.Attributes("Typ").First().Value == "GebrZahl")
