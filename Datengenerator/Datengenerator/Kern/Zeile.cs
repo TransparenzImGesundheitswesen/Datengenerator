@@ -77,7 +77,7 @@ namespace Datengenerator.Kern
                         else if (feldXml.Attributes("Typ").First().Value == "Ganzzahl")
                             feld = new FeldGanzzahl(feldXml, Random, schlechtdatenWahrscheinlichkeit);
                         else if (feldXml.Attributes("Typ").First().Value == "GebrZahl")
-                            feld = new FeldGebrZahl(feldXml, Random);
+                            feld = new FeldGebrZahl(feldXml, Random, schlechtdatenWahrscheinlichkeit);
                     }
 
                     string wert = feld.Generieren();
