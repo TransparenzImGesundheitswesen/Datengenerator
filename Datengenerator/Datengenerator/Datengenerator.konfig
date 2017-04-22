@@ -3,4 +3,6 @@ XML: XML-Testdateien/ASV.xml
 
 Validieren: 1
 
+SchlechtdatenGenerieren: 1
+
 AnzahlZeilen: 50000

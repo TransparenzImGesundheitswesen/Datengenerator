@@ -34,6 +34,11 @@ namespace Datengenerator.Kern
 
         public virtual string Generieren()
         {
+            return Generieren(false);
+        }
+
+        public virtual string Generieren(bool schlechtdatenGenerieren)
+        {
             switch (Format)
             {
                 case "JJJJQ":

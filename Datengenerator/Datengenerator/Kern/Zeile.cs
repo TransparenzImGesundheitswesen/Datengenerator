@@ -24,7 +24,7 @@ namespace Datengenerator.Kern
             RandomProp = rp;
         }
 
-        public string Generieren()
+        public string Generieren(bool schlechtdatenGenerieren)
         {
             string zeile = "";
             Dictionary<string, string> feldliste = new Dictionary<string, string>();

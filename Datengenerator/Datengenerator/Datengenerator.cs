@@ -42,7 +42,7 @@ namespace Datengenerator
             Parallel.ForEach(satzartenXml.Elements("Satzart"), satzartXml =>
             {
                 Datei datei = new Datei(satzartXml);
-                datei.Generieren(Konfiguration.AnzahlZeilen);
+                datei.Generieren(Konfiguration.AnzahlZeilen, Konfiguration.SchlechtdatenGenerieren);
             });
 
             Console.WriteLine("Narf!");
