@@ -7,14 +7,17 @@ namespace Datengenerator.Kern
     {
         public string SchlüsselverzeichnisName;
 
-        public FeldFGCode(XElement xml, Random r) : base(xml, r)
+        public FeldFGCode(XElement xml, Random r, bool schlechtdatenGenerieren) : base(xml, r, schlechtdatenGenerieren)
         {
             SchlüsselverzeichnisName = "FGCode";
         }
 
         public override string Generieren()
         {
-            return Schlüsselverzeichnismanager.ZufälligerEintrag(SchlüsselverzeichnisName);
+            if (SchlechtdatenGenerieren && Random.Next(0, SchlechtdatenWahrscheinlichkeit) == 0)
+                return "FG";
+            else
+                return Schlüsselverzeichnismanager.ZufälligerEintrag(SchlüsselverzeichnisName);
         }
     }
 }

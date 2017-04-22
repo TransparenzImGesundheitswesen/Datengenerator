@@ -68,7 +68,7 @@ namespace Datengenerator.Kern
                         else if (feldXml.Attributes("Typ").First().Value == "ICD")
                             feld = new FeldICD(feldXml, Random);
                         else if (feldXml.Attributes("Typ").First().Value == "FGCode")
-                            feld = new FeldFGCode(feldXml, Random);
+                            feld = new FeldFGCode(feldXml, Random, schlechtdatenGenerieren);
                         else if (feldXml.Attributes("Typ").First().Value == "GOP")
                             feld = new FeldGOP(feldXml, Random);
                         else if (feldXml.Attributes("Typ").First().Value == "Ganzzahl")
