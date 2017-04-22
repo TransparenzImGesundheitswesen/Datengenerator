@@ -5,13 +5,16 @@ namespace Datengenerator.Kern
 {
     class FeldPLZ : Feld
     {
-        public FeldPLZ(XElement xml, Random r) : base(xml, r)
+        public FeldPLZ(XElement xml, Random r, int schlechtdatenWahrscheinlichkeit) : base(xml, r, schlechtdatenWahrscheinlichkeit)
         {
         }
 
         public override string Generieren()
         {
-            return string.Format("{0:00000}", Random.Next(1000, 100000));
+            if (SchlechtdatenGenerieren && Random.Next(0, SchlechtdatenWahrscheinlichkeit) == 0)
+                return "ABCDE";
+            else
+                return string.Format("{0:00000}", Random.Next(1000, 100000));
         }
     }
 }
