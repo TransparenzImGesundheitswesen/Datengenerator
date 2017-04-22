@@ -57,7 +57,7 @@ namespace Datengenerator.Kern
                     else if (feldXml.Attributes("Typ").Any())
                     {
                         if (feldXml.Attributes("Typ").First().Value == "Hash")
-                            feld = new FeldHash(feldXml, Random);
+                            feld = new FeldHash(feldXml, Random, schlechtdatenWahrscheinlichkeit);
                         else if (feldXml.Attributes("Typ").First().Value == "IK")
                             feld = new FeldIK(feldXml, Random);
                         else if (feldXml.Attributes("Typ").First().Value == "KV")
