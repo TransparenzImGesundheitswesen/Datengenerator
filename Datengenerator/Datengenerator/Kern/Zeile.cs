@@ -31,7 +31,7 @@ namespace Datengenerator.Kern
 
             foreach (XElement feldXml in FelderXml.Elements("Feld"))
             {
-                Feld feld = new Feld(feldXml, Random);
+                Feld feld = new Feld(feldXml, Random, schlechtdatenGenerieren);
 
                 if (
                     (feld.Art == Feldart.m // Bedingtes Muss-Feld

@@ -13,18 +13,21 @@ namespace Datengenerator.Kern
         public Feldeigenschaft Eigenschaft;
         public string Format;
         public string Erläuterung;
+
         public readonly Random Random;
+        public readonly bool SchlechtdatenGenerieren;
 
         private List<string> blindtexte = new List<string> { "Narf", "Troz", "Zort", "Fjort", "Poit" };
 
 
-        public Feld(XElement xml, Random r)
+        public Feld(XElement xml, Random r, bool schlechtdatenGenerieren)
         {
             Nummer = xml.Attribute("Nummer").Value;
             Name = xml.Element("Name").Value;
             Art = (Feldart)Enum.Parse(typeof(Feldart), xml.Element("Art").Value);
 
             Random = r;
+            SchlechtdatenGenerieren = schlechtdatenGenerieren;
 
             if (xml.Elements("Format").Any())
                 Format = xml.Element("Format").Value;
@@ -32,12 +35,11 @@ namespace Datengenerator.Kern
                 Format = "";
         }
 
-        public virtual string Generieren()
+        public Feld(XElement xml, Random r) : this(xml, r, false)
         {
-            return Generieren(false);
         }
 
-        public virtual string Generieren(bool schlechtdatenGenerieren)
+        public virtual string Generieren()
         {
             switch (Format)
             {
