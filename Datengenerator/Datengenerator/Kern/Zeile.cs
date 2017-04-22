@@ -65,7 +65,7 @@ namespace Datengenerator.Kern
                         else if (feldXml.Attributes("Typ").First().Value == "PLZ")
                             feld = new FeldPLZ(feldXml, Random);
                         else if (feldXml.Attributes("Typ").First().Value == "KalTag")
-                            feld = new FeldKalTag(feldXml, Random);
+                            feld = new FeldKalTag(feldXml, Random, schlechtdatenWahrscheinlichkeit);
                         else if (feldXml.Attributes("Typ").First().Value == "VsTage")
                             feld = new FeldVsTage(feldXml, RandomProp);
                         else if (feldXml.Attributes("Typ").First().Value == "ICD")
