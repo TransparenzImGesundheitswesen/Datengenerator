@@ -12,8 +12,8 @@ namespace Datengenerator.Kern
         {
             string[] komponenten = xml.Element("Stellen").Value.Split(',');
 
-            StellenVor = int.Parse(komponenten[0]);
             StellenNach = int.Parse(komponenten[1]);
+            StellenVor = int.Parse(komponenten[0]) - StellenNach;
         }
 
         public override string Generieren()
