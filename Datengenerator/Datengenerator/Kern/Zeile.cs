@@ -14,6 +14,7 @@ namespace Datengenerator.Kern
         public XElement FelderXml;
         public readonly Random Random;
         public readonly RandomProportional RandomProp;
+        public Dictionary<string, string> Feldliste = new Dictionary<string, string>();
 
         public Zeile(string feldtrennzeichen, string zeilentrennzeichen, XElement felderXml, Random r, RandomProportional rp)
         {
@@ -27,7 +28,6 @@ namespace Datengenerator.Kern
         public string Generieren(int schlechtdatenWahrscheinlichkeit)
         {
             string zeile = "";
-            Dictionary<string, string> feldliste = new Dictionary<string, string>();
 
             foreach (XElement feldXml in FelderXml.Elements("Feld"))
             {
@@ -35,7 +35,7 @@ namespace Datengenerator.Kern
 
                 if (
                     (feld.Art == Feldart.m // Bedingtes Muss-Feld
-                        && feldliste[feldXml.Descendants("BedingungFeld").Select(m => m.Value).First()] != feldXml.Descendants("BedingungWert").Select(m => m.Value).First())
+                        && Feldliste[feldXml.Descendants("BedingungFeld").Select(m => m.Value).First()] != feldXml.Descendants("BedingungWert").Select(m => m.Value).First())
                     ||
                     (feld.Art == Feldart.K // Kann-Feld
                         && Random.Next(0, 2) == 0)
@@ -45,7 +45,7 @@ namespace Datengenerator.Kern
                    )
                 {
                     zeile += "" + Feldtrennzeichen;
-                    feldliste.Add(feld.Nummer, "");
+                    Feldliste.Add(feld.Nummer, "");
                 }
                 else
                 {
@@ -83,7 +83,7 @@ namespace Datengenerator.Kern
                     }
 
                     string wert = feld.Generieren();
-                    feldliste.Add(feld.Nummer, wert);
+                    Feldliste.Add(feld.Nummer, wert);
                     zeile += wert + Feldtrennzeichen;
                 }
 

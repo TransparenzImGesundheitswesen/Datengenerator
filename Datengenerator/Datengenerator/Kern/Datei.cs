@@ -1,17 +1,21 @@
 ﻿using Datengenerator.Loggen;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Linq;
 
 namespace Datengenerator.Kern
 {
     class Datei
     {
-        public string Satzartname;
-        public string Zeichensatz;
-        public string Feldtrennzeichen;
-        public string Zeilentrennzeichen;
-        public string Endung;
-        public XElement SatzartXml;
+        private string Satzartname;
+        private string Zeichensatz;
+        private string Feldtrennzeichen;
+        private string Zeilentrennzeichen;
+        private string Endung;
+        private XElement SatzartXml;
+        private List<string> Primärschlüsselfelder;
+        private Dictionary<string, int> Primärschlüssel = new Dictionary<string, int>();
 
         public Datei(XElement satzartXml)
         {
@@ -21,6 +25,9 @@ namespace Datengenerator.Kern
             Zeilentrennzeichen = "\r\n";
             Endung = "csv";
             Satzartname = SatzartXml.Attribute("Name").Value;
+
+            if (SatzartXml.Descendants("Primärschlüssel").Descendants("Feld").Any())
+                Primärschlüsselfelder = SatzartXml.Descendants("Primärschlüssel").Descendants("Feld").Select(m => m.Value).ToList();
         }
 
         public void Generieren(int zeilenzahl, int schlechtdatenWahrscheinlichkeit)
@@ -32,7 +39,25 @@ namespace Datengenerator.Kern
             {
                 for (int i = 0; i < zeilenzahl; i++)
                 {
-                    datei.Write(new Zeile(Feldtrennzeichen, Zeilentrennzeichen, SatzartXml.Element("Felder"), r, rp).Generieren(schlechtdatenWahrscheinlichkeit));
+                    string primärschlüssel = "";
+                    Zeile zeile;
+                    string zeileString;
+
+                    do
+                    {
+                        zeile = new Zeile(Feldtrennzeichen, Zeilentrennzeichen, SatzartXml.Element("Felder"), r, rp);
+                        zeileString = zeile.Generieren(schlechtdatenWahrscheinlichkeit);
+                        primärschlüssel = "";
+
+                        if (Primärschlüsselfelder != null)
+                            foreach (string feld in Primärschlüsselfelder)
+                                primärschlüssel += zeile.Feldliste[feld];
+                    } while (Primärschlüsselfelder != null && Primärschlüssel.Keys.Contains(primärschlüssel) && !(schlechtdatenWahrscheinlichkeit != 0 && r.Next(0, schlechtdatenWahrscheinlichkeit) == 0));
+
+                    if (Primärschlüsselfelder != null)
+                        Primärschlüssel.Add(primärschlüssel, i);
+
+                    datei.Write(zeileString);
                 }
             }
         }
