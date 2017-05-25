@@ -57,7 +57,10 @@ namespace Datengenerator.Kern
             if (SchlechtdatenGenerieren && Random.Next(0, SchlechtdatenWahrscheinlichkeit) == 0)
                 return "QQQQQ";
             else
-                return string.Format("2017{0}", Random.Next(1, 5));
+                if (Name.Contains("Geburts"))
+                    return string.Format("{0}{1}", 1950 + Random.Next(0, 60), Random.Next(1, 5));
+                else
+                    return string.Format("2017{0}", Random.Next(1, 5));
         }
 
         private string GenerierenDatum()
