@@ -5,11 +5,11 @@ namespace Datengenerator.Kern
 {
     class FeldGanzzahl : Feld
     {
-        public int Stellen;
+        private int stellen;
 
         public FeldGanzzahl(XElement xml, Random r, int schlechtdatenWahrscheinlichkeit) : base(xml, r, schlechtdatenWahrscheinlichkeit)
         {
-            Stellen = int.Parse(xml.Element("Stellen").Value.Replace("<=", ""));
+            stellen = int.Parse(xml.Element("Stellen").Value.Replace("<=", ""));
         }
 
         public override string Generieren()
@@ -23,7 +23,7 @@ namespace Datengenerator.Kern
             }
             else
             {
-                int max = (int)Math.Pow(10, Stellen);
+                int max = (int)Math.Pow(10, stellen);
                 return Random.Next(1, max).ToString();
             }
         }

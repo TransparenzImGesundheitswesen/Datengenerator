@@ -5,15 +5,15 @@ namespace Datengenerator.Kern
 {
     class FeldGebrZahl : Feld
     {
-        public int StellenVor;
-        public int StellenNach;
+        private int stellenVor;
+        private int stellenNach;
 
         public FeldGebrZahl(XElement xml, Random r, int schlechtdatenWahrscheinlichkeit) : base(xml, r, schlechtdatenWahrscheinlichkeit)
         {
             string[] komponenten = xml.Element("Stellen").Value.Split(',');
 
-            StellenNach = int.Parse(komponenten[1]);
-            StellenVor = int.Parse(komponenten[0]) - StellenNach;
+            stellenNach = int.Parse(komponenten[1]);
+            stellenVor = int.Parse(komponenten[0]) - stellenNach;
         }
 
         public override string Generieren()
@@ -22,8 +22,8 @@ namespace Datengenerator.Kern
                 return "ABC";
             else
             {
-                double max = Math.Pow(10, StellenVor);
-                return string.Format("{0:F" + StellenNach + "}", Random.NextDouble() * max);
+                double max = Math.Pow(10, stellenVor);
+                return string.Format("{0:F" + stellenNach + "}", Random.NextDouble() * max);
             }
         }
     }
