@@ -78,6 +78,8 @@ namespace Datengenerator.Kern
                             feld = new FeldGanzzahl(feldXml, Random, schlechtdatenWahrscheinlichkeit);
                         else if (feldXml.Attributes("Typ").First().Value == "GebrZahl")
                             feld = new FeldGebrZahl(feldXml, Random, schlechtdatenWahrscheinlichkeit);
+                        else if (feldXml.Attributes("Typ").First().Value == "Freitext")
+                            feld = new FeldFreitext(feldXml, Random, schlechtdatenWahrscheinlichkeit);
                     }
 
                     string wert = feld.Generieren();

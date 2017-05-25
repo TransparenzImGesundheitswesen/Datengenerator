@@ -18,8 +18,6 @@ namespace Datengenerator.Kern
         public readonly bool SchlechtdatenGenerieren;
         public readonly int SchlechtdatenWahrscheinlichkeit;
 
-        private List<string> blindtexte = new List<string> { "Narf", "Troz", "Zort", "Fjort", "Poit" };
-
 
         public Feld(XElement xml, Random r, int schlechtdatenWahrscheinlichkeit)
         {
@@ -50,7 +48,7 @@ namespace Datengenerator.Kern
                 case "JJJJMMTT":
                     return GenerierenDatum();
                 default:
-                    return blindtexte[Random.Next(0, blindtexte.Count)];
+                    throw new NotImplementedException();
             }
         }
 

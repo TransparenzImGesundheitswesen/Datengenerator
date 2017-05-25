@@ -49,6 +49,7 @@
     <Compile Include="Kern\Feldeigenschaft.cs" />
     <Compile Include="Kern\FeldEnum.cs" />
     <Compile Include="Kern\FeldFGCode.cs" />
+    <Compile Include="Kern\FeldFreitext.cs" />
     <Compile Include="Kern\FeldGanzzahl.cs" />
     <Compile Include="Kern\FeldGebrZahl.cs" />
     <Compile Include="Kern\FeldGOP.cs" />
