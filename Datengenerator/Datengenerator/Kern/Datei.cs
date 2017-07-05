@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Xml.Linq;
 
 namespace Datengenerator.Kern
@@ -35,7 +36,7 @@ namespace Datengenerator.Kern
             Random r = new Random();
             RandomProportional rp = new RandomProportional();
 
-            using (System.IO.StreamWriter datei = new System.IO.StreamWriter(string.Format("{0}_.{1}", Satzartname, Endung).ZeitstempelAnhängen(), true))
+            using (System.IO.StreamWriter datei = new System.IO.StreamWriter(string.Format("{0}_.{1}", Satzartname, Endung).ZeitstempelAnhängen(), true, Encoding.GetEncoding("iso-8859-15")))
             {
                 for (int i = 0; i < zeilenzahl; i++)
                 {
