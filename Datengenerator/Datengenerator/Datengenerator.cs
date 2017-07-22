@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Linq;
 using System.Xml.Linq;
 using System.Collections.Generic;
 
@@ -7,6 +8,7 @@ using Datengenerator.Kern;
 using Datengenerator.Konfig;
 using Datengenerator.Loggen;
 using Datengenerator.XML;
+using System.Threading;
 
 namespace Datengenerator
 {
@@ -38,12 +40,33 @@ namespace Datengenerator
             Schlüsselverzeichnismanager.SchlüsselverzeichnisseHinzufügen(schlüsselverzeichnisseXml);
 
             IEnumerable<XElement> satzartenXml = xml.Descendants("Satzarten");
-            //foreach (XElement satzartXml in satzartenXml.Elements("Satzart"))
-            Parallel.ForEach(satzartenXml.Elements("Satzart"), satzartXml =>
+
+            // Dieser Code geht davon aus, dass in der XML-Datei die Satzarten mit der Fremdschlüsselbeziehung
+            // immer nach der Satzart steht, auf die die Beziehung zeigt, damit die Event-Registrierung klappt            
+            List<Datei> alleDateien = new List<Datei>();
+
+            foreach (XElement satzartXml in satzartenXml.Elements("Satzart"))
             {
-                Datei datei = new Datei(satzartXml);
+                Datei datei = new Datei(satzartXml, alleDateien);
+                alleDateien.Add(datei);
+            }
+
+            foreach(Datei datei in alleDateien.Where(m => !m.HatFremdschlüssel))
+            {
                 datei.Generieren(Konfiguration.AnzahlZeilen, Konfiguration.SchlechtdatenWahrscheinlichkeit);
-            });
+            }
+
+            //Parallel.ForEach(alleDateien.Where(m => !m.HatFremdschlüssel), datei =>
+            //{
+            //    datei.Generieren(Konfiguration.AnzahlZeilen, Konfiguration.SchlechtdatenWahrscheinlichkeit);
+            //});
+            
+            //Thread.Sleep(5000);
+
+            //foreach(Datei datei in alleDateien)
+            //{
+            //    datei.Schreiben();
+            //}
 
             Console.WriteLine("Narf!");
             Console.ReadLine();

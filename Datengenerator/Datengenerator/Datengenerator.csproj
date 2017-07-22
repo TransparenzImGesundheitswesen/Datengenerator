@@ -64,7 +64,9 @@
     <Compile Include="Kern\RandomProportional.cs" />
     <Compile Include="Kern\Schlüsselverzeichnis.cs" />
     <Compile Include="Kern\Schlüsselverzeichnismanager.cs" />
+    <Compile Include="Kern\Schreiber.cs" />
     <Compile Include="Kern\Zeile.cs" />
+    <Compile Include="Kern\ZeileGeneriertEventArgs.cs" />
     <Compile Include="Konfig\Konfig.cs" />
     <Compile Include="Loggen\Logger.cs" />
     <Compile Include="Loggen\StringExtension.cs" />
@@ -96,6 +98,7 @@
   <ItemGroup>
     <None Include="XML-Testdateien\ASV.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup />

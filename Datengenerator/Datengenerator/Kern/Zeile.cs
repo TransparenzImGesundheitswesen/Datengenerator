@@ -25,7 +25,7 @@ namespace Datengenerator.Kern
             RandomProp = rp;
         }
 
-        public string Generieren(int schlechtdatenWahrscheinlichkeit)
+        public string Generieren(int schlechtdatenWahrscheinlichkeit, Dictionary<string, string> fremdschlüssel)
         {
             string zeile = "";
 
@@ -33,60 +33,67 @@ namespace Datengenerator.Kern
             {
                 Feld feld = new Feld(feldXml, Random, schlechtdatenWahrscheinlichkeit);
 
-                if (
-                    (feld.Art == Feldart.m // Bedingtes Muss-Feld
-                        && Feldliste[feldXml.Descendants("BedingungFeld").Select(m => m.Value).First()] != feldXml.Descendants("BedingungWert").Select(m => m.Value).First())
-                    ||
-                    (feld.Art == Feldart.K // Kann-Feld
-                        && Random.Next(0, 2) == 0)
-                    ||
-                    (feld.Art == Feldart.M && schlechtdatenWahrscheinlichkeit > 0 // Muss-Feld und Schlechtdaten aktiviert
-                        && Random.Next(0, schlechtdatenWahrscheinlichkeit) == 0)
-                   )
+                if (fremdschlüssel != null && fremdschlüssel.Count > 0 && fremdschlüssel.Keys.Contains(feld.Nummer))
                 {
-                    zeile += "" + Feldtrennzeichen;
-                    Feldliste.Add(feld.Nummer, "");
+                    zeile += fremdschlüssel[feld.Nummer] + Feldtrennzeichen;
+                    Feldliste.Add(feld.Nummer, fremdschlüssel[feld.Nummer]);
                 }
                 else
                 {
-
-                    if (feldXml.Elements("Konstant").Any())
-                        feld = new FeldKonstant(feldXml, Random, schlechtdatenWahrscheinlichkeit);
-                    else if (feldXml.Elements("ZulässigeWerte").Any())
-                        feld = new FeldEnum(feldXml, Random, schlechtdatenWahrscheinlichkeit);
-                    else if (feldXml.Attributes("Typ").Any())
+                    if (
+                        (feld.Art == Feldart.m // Bedingtes Muss-Feld
+                            && Feldliste[feldXml.Descendants("BedingungFeld").Select(m => m.Value).First()] != feldXml.Descendants("BedingungWert").Select(m => m.Value).First())
+                        ||
+                        (feld.Art == Feldart.K // Kann-Feld
+                            && Random.Next(0, 2) == 0)
+                        ||
+                        (feld.Art == Feldart.M && schlechtdatenWahrscheinlichkeit > 0 // Muss-Feld und Schlechtdaten aktiviert
+                            && Random.Next(0, schlechtdatenWahrscheinlichkeit) == 0)
+                       )
                     {
-                        if (feldXml.Attributes("Typ").First().Value == "Hash")
-                            feld = new FeldHash(feldXml, Random, schlechtdatenWahrscheinlichkeit);
-                        else if (feldXml.Attributes("Typ").First().Value == "IK")
-                            feld = new FeldIK(feldXml, Random, schlechtdatenWahrscheinlichkeit);
-                        else if (feldXml.Attributes("Typ").First().Value == "KV")
-                            feld = new FeldKV(feldXml, Random, schlechtdatenWahrscheinlichkeit);
-                        else if (feldXml.Attributes("Typ").First().Value == "PLZ")
-                            feld = new FeldPLZ(feldXml, Random, schlechtdatenWahrscheinlichkeit);
-                        else if (feldXml.Attributes("Typ").First().Value == "KalTag")
-                            feld = new FeldKalTag(feldXml, Random, schlechtdatenWahrscheinlichkeit);
-                        else if (feldXml.Attributes("Typ").First().Value == "VsTage")
-                            feld = new FeldVsTage(feldXml, Random, RandomProp, schlechtdatenWahrscheinlichkeit);
-                        else if (feldXml.Attributes("Typ").First().Value == "ICD")
-                            feld = new FeldICD(feldXml, Random, schlechtdatenWahrscheinlichkeit);
-                        else if (feldXml.Attributes("Typ").First().Value == "FGCode")
-                            feld = new FeldFGCode(feldXml, Random, schlechtdatenWahrscheinlichkeit);
-                        else if (feldXml.Attributes("Typ").First().Value == "GOP")
-                            feld = new FeldGOP(feldXml, Random, schlechtdatenWahrscheinlichkeit);
-                        else if (feldXml.Attributes("Typ").First().Value == "Ganzzahl")
-                            feld = new FeldGanzzahl(feldXml, Random, schlechtdatenWahrscheinlichkeit);
-                        else if (feldXml.Attributes("Typ").First().Value == "GebrZahl")
-                            feld = new FeldGebrZahl(feldXml, Random, schlechtdatenWahrscheinlichkeit);
-                        else if (feldXml.Attributes("Typ").First().Value == "Freitext")
-                            feld = new FeldFreitext(feldXml, Random, schlechtdatenWahrscheinlichkeit);
+                        zeile += "" + Feldtrennzeichen;
+                        Feldliste.Add(feld.Nummer, "");
                     }
+                    else
+                    {
 
-                    string wert = feld.Generieren();
-                    Feldliste.Add(feld.Nummer, wert);
-                    zeile += wert + Feldtrennzeichen;
+                        if (feldXml.Elements("Konstant").Any())
+                            feld = new FeldKonstant(feldXml, Random, schlechtdatenWahrscheinlichkeit);
+                        else if (feldXml.Elements("ZulässigeWerte").Any())
+                            feld = new FeldEnum(feldXml, Random, schlechtdatenWahrscheinlichkeit);
+                        else if (feldXml.Attributes("Typ").Any())
+                        {
+                            if (feldXml.Attributes("Typ").First().Value == "Hash")
+                                feld = new FeldHash(feldXml, Random, schlechtdatenWahrscheinlichkeit);
+                            else if (feldXml.Attributes("Typ").First().Value == "IK")
+                                feld = new FeldIK(feldXml, Random, schlechtdatenWahrscheinlichkeit);
+                            else if (feldXml.Attributes("Typ").First().Value == "KV")
+                                feld = new FeldKV(feldXml, Random, schlechtdatenWahrscheinlichkeit);
+                            else if (feldXml.Attributes("Typ").First().Value == "PLZ")
+                                feld = new FeldPLZ(feldXml, Random, schlechtdatenWahrscheinlichkeit);
+                            else if (feldXml.Attributes("Typ").First().Value == "KalTag")
+                                feld = new FeldKalTag(feldXml, Random, schlechtdatenWahrscheinlichkeit);
+                            else if (feldXml.Attributes("Typ").First().Value == "VsTage")
+                                feld = new FeldVsTage(feldXml, Random, RandomProp, schlechtdatenWahrscheinlichkeit);
+                            else if (feldXml.Attributes("Typ").First().Value == "ICD")
+                                feld = new FeldICD(feldXml, Random, schlechtdatenWahrscheinlichkeit);
+                            else if (feldXml.Attributes("Typ").First().Value == "FGCode")
+                                feld = new FeldFGCode(feldXml, Random, schlechtdatenWahrscheinlichkeit);
+                            else if (feldXml.Attributes("Typ").First().Value == "GOP")
+                                feld = new FeldGOP(feldXml, Random, schlechtdatenWahrscheinlichkeit);
+                            else if (feldXml.Attributes("Typ").First().Value == "Ganzzahl")
+                                feld = new FeldGanzzahl(feldXml, Random, schlechtdatenWahrscheinlichkeit);
+                            else if (feldXml.Attributes("Typ").First().Value == "GebrZahl")
+                                feld = new FeldGebrZahl(feldXml, Random, schlechtdatenWahrscheinlichkeit);
+                            else if (feldXml.Attributes("Typ").First().Value == "Freitext")
+                                feld = new FeldFreitext(feldXml, Random, schlechtdatenWahrscheinlichkeit);
+                        }
+
+                        string wert = feld.Generieren();
+                        Feldliste.Add(feld.Nummer, wert);
+                        zeile += wert + Feldtrennzeichen;
+                    }
                 }
-
             }
 
             zeile = zeile.Substring(0, zeile.Length - 1) + Zeilentrennzeichen;

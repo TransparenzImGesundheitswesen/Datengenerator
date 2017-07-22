@@ -6,4 +6,4 @@ Validieren: 1
 # Zulässige Werte: 0 oder das N in 1/N
 SchlechtdatenWahrscheinlichkeit: 10000
 
-AnzahlZeilen: 50000
+AnzahlZeilen: 5000

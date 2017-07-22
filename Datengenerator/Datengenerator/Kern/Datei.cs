@@ -1,8 +1,10 @@
 ﻿using Datengenerator.Loggen;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace Datengenerator.Kern
@@ -10,15 +12,21 @@ namespace Datengenerator.Kern
     class Datei
     {
         private string Satzartname;
+        private string Dateiname;
         private string Zeichensatz;
         private string Feldtrennzeichen;
         private string Zeilentrennzeichen;
         private string Endung;
         private XElement SatzartXml;
         private List<string> Primärschlüsselfelder;
-        private Dictionary<string, int> Primärschlüssel = new Dictionary<string, int>();
+        private List<string> Primärschlüssel = new List<string>();
+        public bool HatFremdschlüssel;
+        private List<string> Fremdschlüsselfelder;
 
-        public Datei(XElement satzartXml)
+        private Random r = new Random();
+        private RandomProportional rp = new RandomProportional();
+
+        public Datei(XElement satzartXml, List<Datei> alleDateien)
         {
             SatzartXml = satzartXml;
 
@@ -29,38 +37,121 @@ namespace Datengenerator.Kern
 
             if (SatzartXml.Descendants("Primärschlüssel").Descendants("Feld").Any())
                 Primärschlüsselfelder = SatzartXml.Descendants("Primärschlüssel").Descendants("Feld").Select(m => m.Value).ToList();
+
+            HatFremdschlüssel = SatzartXml.Descendants("Fremdschlüssel").Any();
+
+            if (HatFremdschlüssel && alleDateien.Count > 0)
+            {
+                string fremdschlüsselsatzart = SatzartXml.Descendants("Fremdschlüssel").Descendants("Satzart").Select(m => m.Value).First();
+                alleDateien.Where(m => m.Satzartname == fremdschlüsselsatzart).First().ZeileGeneriert += ZeileGenerieren;
+
+                Fremdschlüsselfelder = SatzartXml.Descendants("Fremdschlüssel").Descendants("Feld").Select(m => m.Value).ToList();
+            }
+
+            Dateiname = string.Format("{0}_.{1}", Satzartname, Endung).ZeitstempelAnhängen();
         }
 
         public void Generieren(int zeilenzahl, int schlechtdatenWahrscheinlichkeit)
         {
-            Random r = new Random();
-            RandomProportional rp = new RandomProportional();
+            Dictionary<string, string> primärschlüssel = new Dictionary<string, string>();
 
-            using (System.IO.StreamWriter datei = new System.IO.StreamWriter(string.Format("{0}_.{1}", Satzartname, Endung).ZeitstempelAnhängen(), true, Encoding.GetEncoding("iso-8859-15")))
+            for (int i = 0; i < zeilenzahl; i++)
             {
-                for (int i = 0; i < zeilenzahl; i++)
+                string primärschlüsselString = "";
+                Zeile zeile;
+                string zeileString;
+
+                do
                 {
-                    string primärschlüssel = "";
-                    Zeile zeile;
-                    string zeileString;
+                    primärschlüssel.Clear();
 
-                    do
-                    {
-                        zeile = new Zeile(Feldtrennzeichen, Zeilentrennzeichen, SatzartXml.Element("Felder"), r, rp);
-                        zeileString = zeile.Generieren(schlechtdatenWahrscheinlichkeit);
-                        primärschlüssel = "";
-
-                        if (Primärschlüsselfelder != null)
-                            foreach (string feld in Primärschlüsselfelder)
-                                primärschlüssel += zeile.Feldliste[feld];
-                    } while (Primärschlüsselfelder != null && Primärschlüssel.Keys.Contains(primärschlüssel) && !(schlechtdatenWahrscheinlichkeit != 0 && r.Next(0, schlechtdatenWahrscheinlichkeit) == 0));
+                    zeile = new Zeile(Feldtrennzeichen, Zeilentrennzeichen, SatzartXml.Element("Felder"), r, rp);
+                    zeileString = zeile.Generieren(schlechtdatenWahrscheinlichkeit, null);
+                    primärschlüsselString = "";
 
                     if (Primärschlüsselfelder != null)
-                        Primärschlüssel.Add(primärschlüssel, i);
+                        foreach (string feld in Primärschlüsselfelder)
+                        {
+                            primärschlüsselString += zeile.Feldliste[feld];
+                            primärschlüssel.Add(feld, zeile.Feldliste[feld]);
+                        }
+                } while (Primärschlüsselfelder != null && Primärschlüssel.Contains(primärschlüsselString) && !(schlechtdatenWahrscheinlichkeit != 0 && r.Next(0, schlechtdatenWahrscheinlichkeit) == 0));
 
-                    datei.Write(zeileString);
-                }
+                if (Primärschlüsselfelder != null)
+                    Primärschlüssel.Add(primärschlüsselString);
+
+                Schreiber.Schreiben(Dateiname, zeileString);
+
+                OnZeileGeneriert(new ZeileGeneriertEventArgs(schlechtdatenWahrscheinlichkeit, primärschlüssel));
+
+                Console.WriteLine(i);
             }
+        }
+
+        public event EventHandler ZeileGeneriert;
+        protected virtual void OnZeileGeneriert(ZeileGeneriertEventArgs e)
+        {
+            //if (ZeileGeneriert != null)
+            //{
+            ZeileGeneriert?.Invoke(this, e);
+            //    var eventListeners = ZeileGeneriert.GetInvocationList();
+
+            //    for (int index = 0; index < eventListeners.Count(); index++)
+            //    {
+            //        var methode = (EventHandler)eventListeners[index];
+            //        methode.BeginInvoke(this, e, EndAsyncEvent, null);
+            //    }
+            //}
+        }
+
+        private void EndAsyncEvent(IAsyncResult iar)
+        {
+            var ar = (System.Runtime.Remoting.Messaging.AsyncResult)iar;
+            var invokedMethod = (EventHandler)ar.AsyncDelegate;
+
+            try
+            {
+                invokedMethod.EndInvoke(iar);
+            }
+            catch
+            {
+                Console.WriteLine("EventListener fehlgeschlagen");
+            }
+        }
+
+        void ZeileGenerieren(object sender, EventArgs e)
+        {
+            ZeileGeneriertEventArgs ev = (ZeileGeneriertEventArgs)e;
+            ZeileGenerieren(ev.SchlechtdatenWahrscheinlichkeit, ev.Primärschlüssel);
+        }
+
+        void ZeileGenerieren(int schlechtdatenWahrscheinlichkeit, Dictionary<string, string> fremdschlüssel)
+        {
+            string primärschlüsselString = "";
+            Zeile zeile;
+            string zeileString;
+            Dictionary<string, string> primärschlüssel = new Dictionary<string, string>();
+
+            do
+            {
+                zeile = new Zeile(Feldtrennzeichen, Zeilentrennzeichen, SatzartXml.Element("Felder"), r, rp);
+                zeileString = zeile.Generieren(schlechtdatenWahrscheinlichkeit, fremdschlüssel);
+                primärschlüsselString = "";
+
+                if (Primärschlüsselfelder != null)
+                    foreach (string feld in Primärschlüsselfelder)
+                    {
+                        primärschlüsselString += zeile.Feldliste[feld];
+                        primärschlüssel.Add(feld, zeile.Feldliste[feld]);
+                    }
+            } while (Primärschlüsselfelder != null && Primärschlüssel.Contains(primärschlüsselString) && !(schlechtdatenWahrscheinlichkeit != 0 && r.Next(0, schlechtdatenWahrscheinlichkeit) == 0));
+
+            if (Primärschlüsselfelder != null)
+                Primärschlüssel.Add(primärschlüsselString);
+
+            Schreiber.Schreiben(Dateiname, zeileString);
+
+            OnZeileGeneriert(new ZeileGeneriertEventArgs(schlechtdatenWahrscheinlichkeit, primärschlüssel));
         }
     }
 }
