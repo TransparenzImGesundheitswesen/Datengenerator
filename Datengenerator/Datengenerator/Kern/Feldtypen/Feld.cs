@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Datengenerator.Konfig;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
@@ -19,24 +20,20 @@ namespace Datengenerator.Kern
         public readonly int SchlechtdatenWahrscheinlichkeit;
 
 
-        public Feld(XElement xml, Random r, int schlechtdatenWahrscheinlichkeit)
+        public Feld(XElement xml, Random r)
         {
             Nummer = xml.Attribute("Nummer").Value;
             Name = xml.Element("Name").Value;
             Art = (Feldart)Enum.Parse(typeof(Feldart), xml.Element("Art").Value);
 
             Random = r;
-            SchlechtdatenGenerieren = schlechtdatenWahrscheinlichkeit != 0;
-            SchlechtdatenWahrscheinlichkeit = schlechtdatenWahrscheinlichkeit;
+            SchlechtdatenGenerieren = Konfiguration.SchlechtdatenWahrscheinlichkeit != 0;
+            SchlechtdatenWahrscheinlichkeit = Konfiguration.SchlechtdatenWahrscheinlichkeit;
 
             if (xml.Elements("Format").Any())
                 Format = xml.Element("Format").Value;
             else
                 Format = "";
-        }
-
-        public Feld(XElement xml, Random r) : this(xml, r, 0)
-        {
         }
 
         public virtual string Generieren()

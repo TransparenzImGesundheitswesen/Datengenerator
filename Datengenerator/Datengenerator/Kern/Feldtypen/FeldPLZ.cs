@@ -5,7 +5,7 @@ namespace Datengenerator.Kern
 {
     class FeldPLZ : Feld
     {
-        public FeldPLZ(XElement xml, Random r, int schlechtdatenWahrscheinlichkeit) : base(xml, r, schlechtdatenWahrscheinlichkeit)
+        public FeldPLZ(XElement xml, Random r) : base(xml, r)
         {
         }
 

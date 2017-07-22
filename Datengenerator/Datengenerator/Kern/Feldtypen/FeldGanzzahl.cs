@@ -7,7 +7,7 @@ namespace Datengenerator.Kern
     {
         private int stellen;
 
-        public FeldGanzzahl(XElement xml, Random r, int schlechtdatenWahrscheinlichkeit) : base(xml, r, schlechtdatenWahrscheinlichkeit)
+        public FeldGanzzahl(XElement xml, Random r) : base(xml, r)
         {
             stellen = int.Parse(xml.Element("Stellen").Value.Replace("<=", ""));
         }

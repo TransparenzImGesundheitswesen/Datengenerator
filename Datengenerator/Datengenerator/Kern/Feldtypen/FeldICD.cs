@@ -7,7 +7,7 @@ namespace Datengenerator.Kern
     {
         public string SchlüsselverzeichnisName;
 
-        public FeldICD(XElement xml, Random r, int schlechtdatenWahrscheinlichkeit) : base(xml, r, schlechtdatenWahrscheinlichkeit)
+        public FeldICD(XElement xml, Random r) : base(xml, r)
         {
             SchlüsselverzeichnisName = "ICD";
         }
