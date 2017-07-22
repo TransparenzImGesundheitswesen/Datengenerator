@@ -31,7 +31,7 @@ namespace Datengenerator.Kern
                 }
             }
             else
-                return (1 + Prop.Next(91)).ToString();
+                return (1 + Prop.Next(90)).ToString();
         }
     }
 }
