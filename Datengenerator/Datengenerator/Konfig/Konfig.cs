@@ -10,6 +10,7 @@ namespace Datengenerator.Konfig
         public static readonly string Xml;
         public static readonly bool Validieren;
         public static readonly int SchlechtdatenWahrscheinlichkeit;
+        public static readonly int SchlechtdatenWahrscheinlichkeitFremdschlüssel;
         public static readonly int AnzahlZeilen;
 
         static Konfiguration()
@@ -33,6 +34,9 @@ namespace Datengenerator.Konfig
                         break;
                     case "SchlechtdatenWahrscheinlichkeit":
                         SchlechtdatenWahrscheinlichkeit = int.Parse(komponenten[1].Trim());
+                        break;
+                    case "SchlechtdatenWahrscheinlichkeitFremdschlüssel":
+                        SchlechtdatenWahrscheinlichkeitFremdschlüssel = int.Parse(komponenten[1].Trim());
                         break;
                     case "AnzahlZeilen":
                         AnzahlZeilen = int.Parse(komponenten[1].Trim());

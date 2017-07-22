@@ -8,12 +8,10 @@ namespace Datengenerator.Kern
 {
     class ZeileGeneriertEventArgs : EventArgs
     {
-        public int SchlechtdatenWahrscheinlichkeit;
         public Dictionary<string, string> Primärschlüssel;
 
-        public ZeileGeneriertEventArgs(int schlechtdatenWahrscheinlichkeit, Dictionary<string, string> primärschlüssel) : base()
+        public ZeileGeneriertEventArgs(Dictionary<string, string> primärschlüssel) : base()
         {
-            SchlechtdatenWahrscheinlichkeit = schlechtdatenWahrscheinlichkeit;
             Primärschlüssel = primärschlüssel;
         }
     }

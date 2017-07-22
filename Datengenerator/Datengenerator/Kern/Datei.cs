@@ -1,4 +1,5 @@
-﻿using Datengenerator.Loggen;
+﻿using Datengenerator.Konfig;
+using Datengenerator.Loggen;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -51,11 +52,11 @@ namespace Datengenerator.Kern
             Dateiname = string.Format("{0}_.{1}", Satzartname, Endung).ZeitstempelAnhängen();
         }
 
-        public void Generieren(int zeilenzahl, int schlechtdatenWahrscheinlichkeit)
+        public void Generieren()
         {
             Dictionary<string, string> primärschlüssel = new Dictionary<string, string>();
 
-            for (int i = 0; i < zeilenzahl; i++)
+            for (int i = 0; i < Konfiguration.AnzahlZeilen; i++)
             {
                 string primärschlüsselString = "";
                 Zeile zeile;
@@ -66,7 +67,7 @@ namespace Datengenerator.Kern
                     primärschlüssel.Clear();
 
                     zeile = new Zeile(Feldtrennzeichen, Zeilentrennzeichen, SatzartXml.Element("Felder"), r, rp);
-                    zeileString = zeile.Generieren(schlechtdatenWahrscheinlichkeit, null);
+                    zeileString = zeile.Generieren(null);
                     primärschlüsselString = "";
 
                     if (Primärschlüsselfelder != null)
@@ -75,14 +76,14 @@ namespace Datengenerator.Kern
                             primärschlüsselString += zeile.Feldliste[feld];
                             primärschlüssel.Add(feld, zeile.Feldliste[feld]);
                         }
-                } while (Primärschlüsselfelder != null && Primärschlüssel.Contains(primärschlüsselString) && !(schlechtdatenWahrscheinlichkeit != 0 && r.Next(0, schlechtdatenWahrscheinlichkeit) == 0));
+                } while (Primärschlüsselfelder != null && Primärschlüssel.Contains(primärschlüsselString) && !(Konfiguration.SchlechtdatenWahrscheinlichkeit != 0 && r.Next(0, Konfiguration.SchlechtdatenWahrscheinlichkeit) == 0));
 
                 if (Primärschlüsselfelder != null)
                     Primärschlüssel.Add(primärschlüsselString);
 
                 Schreiber.Schreiben(Dateiname, zeileString);
 
-                OnZeileGeneriert(new ZeileGeneriertEventArgs(schlechtdatenWahrscheinlichkeit, primärschlüssel));
+                OnZeileGeneriert(new ZeileGeneriertEventArgs(primärschlüssel));
 
                 Console.WriteLine(i);
             }
@@ -122,10 +123,10 @@ namespace Datengenerator.Kern
         void ZeileGenerieren(object sender, EventArgs e)
         {
             ZeileGeneriertEventArgs ev = (ZeileGeneriertEventArgs)e;
-            ZeileGenerieren(ev.SchlechtdatenWahrscheinlichkeit, ev.Primärschlüssel);
+            ZeileGenerieren(ev.Primärschlüssel);
         }
 
-        void ZeileGenerieren(int schlechtdatenWahrscheinlichkeit, Dictionary<string, string> fremdschlüssel)
+        void ZeileGenerieren(Dictionary<string, string> fremdschlüssel)
         {
             string primärschlüsselString = "";
             Zeile zeile;
@@ -135,7 +136,7 @@ namespace Datengenerator.Kern
             do
             {
                 zeile = new Zeile(Feldtrennzeichen, Zeilentrennzeichen, SatzartXml.Element("Felder"), r, rp);
-                zeileString = zeile.Generieren(schlechtdatenWahrscheinlichkeit, fremdschlüssel);
+                zeileString = zeile.Generieren(fremdschlüssel);
                 primärschlüsselString = "";
 
                 if (Primärschlüsselfelder != null)
@@ -144,14 +145,14 @@ namespace Datengenerator.Kern
                         primärschlüsselString += zeile.Feldliste[feld];
                         primärschlüssel.Add(feld, zeile.Feldliste[feld]);
                     }
-            } while (Primärschlüsselfelder != null && Primärschlüssel.Contains(primärschlüsselString) && !(schlechtdatenWahrscheinlichkeit != 0 && r.Next(0, schlechtdatenWahrscheinlichkeit) == 0));
+            } while (Primärschlüsselfelder != null && Primärschlüssel.Contains(primärschlüsselString) && !(Konfiguration.SchlechtdatenWahrscheinlichkeit != 0 && r.Next(0, Konfiguration.SchlechtdatenWahrscheinlichkeit) == 0));
 
             if (Primärschlüsselfelder != null)
                 Primärschlüssel.Add(primärschlüsselString);
 
             Schreiber.Schreiben(Dateiname, zeileString);
 
-            OnZeileGeneriert(new ZeileGeneriertEventArgs(schlechtdatenWahrscheinlichkeit, primärschlüssel));
+            OnZeileGeneriert(new ZeileGeneriertEventArgs(primärschlüssel));
         }
     }
 }

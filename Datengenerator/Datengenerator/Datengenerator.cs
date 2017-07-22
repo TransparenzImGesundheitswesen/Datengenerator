@@ -53,7 +53,7 @@ namespace Datengenerator
 
             foreach(Datei datei in alleDateien.Where(m => !m.HatFremdschlüssel))
             {
-                datei.Generieren(Konfiguration.AnzahlZeilen, Konfiguration.SchlechtdatenWahrscheinlichkeit);
+                datei.Generieren();
             }
 
             //Parallel.ForEach(alleDateien.Where(m => !m.HatFremdschlüssel), datei =>
