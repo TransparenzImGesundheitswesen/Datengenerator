@@ -10,17 +10,13 @@ namespace Datengenerator.Kern
 {
     class Zeile
     {
-        public string Feldtrennzeichen;
-        public string Zeilentrennzeichen;
         public XElement FelderXml;
         public readonly Random Random;
         public readonly RandomProportional RandomProp;
         public Dictionary<string, string> Feldliste = new Dictionary<string, string>();
 
-        public Zeile(string feldtrennzeichen, string zeilentrennzeichen, XElement felderXml, Random r, RandomProportional rp)
+        public Zeile(XElement felderXml, Random r, RandomProportional rp)
         {
-            Feldtrennzeichen = feldtrennzeichen;
-            Zeilentrennzeichen = zeilentrennzeichen;
             FelderXml = felderXml;
             Random = r;
             RandomProp = rp;
@@ -37,7 +33,7 @@ namespace Datengenerator.Kern
                 if (fremdschlüssel != null && fremdschlüssel.Count > 0 && fremdschlüssel.Keys.Contains(feld.Nummer)
                     && !(Konfiguration.SchlechtdatenWahrscheinlichkeitFremdschlüssel > 0 && Random.Next(0, Konfiguration.SchlechtdatenWahrscheinlichkeitFremdschlüssel) == 0))
                 {
-                    zeile += fremdschlüssel[feld.Nummer] + Feldtrennzeichen;
+                    zeile += fremdschlüssel[feld.Nummer] + Konfiguration.Feldtrennzeichen;
                     Feldliste.Add(feld.Nummer, fremdschlüssel[feld.Nummer]);
                 }
                 else
@@ -53,7 +49,7 @@ namespace Datengenerator.Kern
                             && Random.Next(0, Konfiguration.SchlechtdatenWahrscheinlichkeit) == 0)
                        )
                     {
-                        zeile += "" + Feldtrennzeichen;
+                        zeile += "" + Konfiguration.Feldtrennzeichen;
                         Feldliste.Add(feld.Nummer, "");
                     }
                     else
@@ -92,12 +88,12 @@ namespace Datengenerator.Kern
 
                         string wert = feld.Generieren();
                         Feldliste.Add(feld.Nummer, wert);
-                        zeile += wert + Feldtrennzeichen;
+                        zeile += wert + Konfiguration.Feldtrennzeichen;
                     }
                 }
             }
 
-            zeile = zeile.Substring(0, zeile.Length - 1) + Zeilentrennzeichen;
+            zeile = zeile.Substring(0, zeile.Length - 1) + Konfiguration.Zeilentrennzeichen;
 
             return zeile;
         }

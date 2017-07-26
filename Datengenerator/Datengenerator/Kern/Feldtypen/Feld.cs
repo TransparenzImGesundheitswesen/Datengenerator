@@ -11,9 +11,9 @@ namespace Datengenerator.Kern
         public string Nummer;
         public string Name;
         public Feldart Art;
-        public Feldeigenschaft Eigenschaft;
+        //public Feldeigenschaft Eigenschaft;
         public string Format;
-        public string Erläuterung;
+        //public string Erläuterung;
 
         public readonly Random Random;
         public readonly bool SchlechtdatenGenerieren;

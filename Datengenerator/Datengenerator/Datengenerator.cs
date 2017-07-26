@@ -39,10 +39,25 @@ namespace Datengenerator
             IEnumerable<XElement> schlüsselverzeichnisseXml = xml.Descendants("Schlüsselverzeichnisse");
             Schlüsselverzeichnismanager.SchlüsselverzeichnisseHinzufügen(schlüsselverzeichnisseXml);
 
-            IEnumerable<XElement> satzartenXml = xml.Descendants("Satzarten");
+            Konfiguration.Zeichensatz = xml.Descendants("Dateikonventionen").Descendants("Zeichensatz").Select(m => m.Value).First();
+
+            string feldtrennzeichen = xml.Descendants("Dateikonventionen").Descendants("Feldtrennzeichen").Select(m => m.Value).First();
+            if (feldtrennzeichen.StartsWith("0x"))
+                foreach (string zeichen in feldtrennzeichen.Split(' '))
+                    Konfiguration.Feldtrennzeichen += System.Convert.ToChar(System.Convert.ToUInt32(feldtrennzeichen, 16)).ToString();
+            else
+                Konfiguration.Feldtrennzeichen = feldtrennzeichen;
+
+            string zeilentrennzeichen = xml.Descendants("Dateikonventionen").Descendants("Zeilentrennzeichen").Select(m => m.Value).First();
+            if (zeilentrennzeichen.StartsWith("0x"))
+                foreach (string zeichen in zeilentrennzeichen.Split(' '))
+                    Konfiguration.Zeilentrennzeichen += System.Convert.ToChar(System.Convert.ToUInt32(zeichen, 16)).ToString();
+            else
+                Konfiguration.Zeilentrennzeichen = zeilentrennzeichen;
 
             // Dieser Code geht davon aus, dass in der XML-Datei die Satzarten mit der Fremdschlüsselbeziehung
-            // immer nach der Satzart steht, auf die die Beziehung zeigt, damit die Event-Registrierung klappt            
+            // immer nach der Satzart steht, auf die die Beziehung zeigt, damit die Event-Registrierung klappt    
+            IEnumerable<XElement> satzartenXml = xml.Descendants("Satzarten");
             List<Datei> alleDateien = new List<Datei>();
 
             foreach (XElement satzartXml in satzartenXml.Elements("Satzart"))

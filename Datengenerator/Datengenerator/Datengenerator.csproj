@@ -67,7 +67,7 @@
     <Compile Include="Kern\Schreiber.cs" />
     <Compile Include="Kern\Zeile.cs" />
     <Compile Include="Kern\ZeileGeneriertEventArgs.cs" />
-    <Compile Include="Konfig\Konfig.cs" />
+    <Compile Include="Konfig\Konfiguration.cs" />
     <Compile Include="Loggen\Logger.cs" />
     <Compile Include="Loggen\StringExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

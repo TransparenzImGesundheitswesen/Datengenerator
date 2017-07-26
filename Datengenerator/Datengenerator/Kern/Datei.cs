@@ -14,9 +14,6 @@ namespace Datengenerator.Kern
     {
         private string Satzartname;
         private string Dateiname;
-        private string Zeichensatz;
-        private string Feldtrennzeichen;
-        private string Zeilentrennzeichen;
         private string Endung;
         private XElement SatzartXml;
         private List<string> Primärschlüsselfelder;
@@ -30,9 +27,7 @@ namespace Datengenerator.Kern
         public Datei(XElement satzartXml, List<Datei> alleDateien)
         {
             SatzartXml = satzartXml;
-
-            Feldtrennzeichen = "#";
-            Zeilentrennzeichen = "\r\n";
+            
             Endung = "csv";
             Satzartname = SatzartXml.Attribute("Name").Value;
 
@@ -66,7 +61,7 @@ namespace Datengenerator.Kern
                 {
                     primärschlüssel.Clear();
 
-                    zeile = new Zeile(Feldtrennzeichen, Zeilentrennzeichen, SatzartXml.Element("Felder"), r, rp);
+                    zeile = new Zeile(SatzartXml.Element("Felder"), r, rp);
                     zeileString = zeile.Generieren(null);
                     primärschlüsselString = "";
 
@@ -135,7 +130,7 @@ namespace Datengenerator.Kern
 
             do
             {
-                zeile = new Zeile(Feldtrennzeichen, Zeilentrennzeichen, SatzartXml.Element("Felder"), r, rp);
+                zeile = new Zeile(SatzartXml.Element("Felder"), r, rp);
                 zeileString = zeile.Generieren(fremdschlüssel);
                 primärschlüsselString = "";
 

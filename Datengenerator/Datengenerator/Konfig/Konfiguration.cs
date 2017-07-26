@@ -13,6 +13,10 @@ namespace Datengenerator.Konfig
         public static readonly int SchlechtdatenWahrscheinlichkeitFremdschlüssel;
         public static readonly int AnzahlZeilen;
 
+        public static string Zeichensatz = "";
+        public static string Feldtrennzeichen = "";
+        public static string Zeilentrennzeichen = "";
+
         static Konfiguration()
         {
             List<string> einträge = new List<string>(System.IO.File.ReadAllLines("Datengenerator.konfig"));
