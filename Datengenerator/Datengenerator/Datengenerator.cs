@@ -58,8 +58,6 @@ namespace Datengenerator
             //foreach (Dictionary<string, string> dateiattribute in Konfiguration.DateiattributeKombinationen)
             Parallel.ForEach(Konfiguration.DateiattributeKombinationen, dateiattribute =>
             {
-                //Konfiguration.AktuelleDateiattributeKombinationen = dateiattribute;
-
                 // Dieser Code geht davon aus, dass in der XML-Datei die Satzarten mit der Fremdschlüsselbeziehung
                 // immer nach der Satzart steht, auf die die Beziehung zeigt, damit die Event-Registrierung klappt    
                 IEnumerable<XElement> satzartenXml = xml.Descendants("Satzarten");

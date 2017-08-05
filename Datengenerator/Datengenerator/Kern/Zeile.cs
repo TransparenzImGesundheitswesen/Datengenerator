@@ -59,7 +59,7 @@ namespace Datengenerator.Kern
                         else if (feldXml.Elements("ZulässigeWerte").Any())
                             feld = new FeldEnum(feldXml, Random);
                         else if (feldXml.Elements("Format").Any())
-                            feld = new FeldQuartalDatum(feldXml, Random, Dateiattribute);
+                            feld = new FeldQuartalDatum(feldXml, Random, Dateiattribute, Feldliste);
                         else if (feldXml.Attributes("Typ").Any())
                         {
                             if (feldXml.Attributes("Typ").First().Value == "Hash")

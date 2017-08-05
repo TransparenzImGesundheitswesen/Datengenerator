@@ -10,13 +10,19 @@ namespace Datengenerator.Kern
     {
         public string Format;
         public Dictionary<string, string> Dateiattribute;
+        public Dictionary<string, string> Feldliste;
+        public string GrößerGleich;
 
-        public FeldQuartalDatum(XElement xml, Random r, Dictionary<string, string> dateiattribute) : base(xml, r)
+        public FeldQuartalDatum(XElement xml, Random r, Dictionary<string, string> dateiattribute, Dictionary<string, string> feldliste) : base(xml, r)
         {
             Dateiattribute = dateiattribute;
+            Feldliste = feldliste;
 
             if (xml.Elements("Format").Any())
                 Format = xml.Element("Format").Value;
+
+            if (xml.Elements("GrößerGleich").Any())
+                GrößerGleich = xml.Element("GrößerGleich").Value;
         }
 
         public override string Generieren()
@@ -42,12 +48,19 @@ namespace Datengenerator.Kern
                     return string.Format("{0}{1}", 1950 + Random.Next(0, 60), Random.Next(1, 5));
                 else
                 {
-                    if (Konfiguration.Quartalsliste.Count > 0)
-                        return Konfiguration.Quartalsliste[Random.Next(0, Konfiguration.Quartalsliste.Count)];
-                    else if(Dateiattribute.Keys.Contains("Jahr"))
-                        return string.Format("{0}{1}", Dateiattribute["Jahr"], Random.Next(1, 5));
-                    else
-                        return string.Format("2017{0}", Random.Next(1, 5));
+                    string rückgabe;
+
+                    do
+                    {
+                        if (Konfiguration.Quartalsliste.Count > 0)
+                            rückgabe = Konfiguration.Quartalsliste[Random.Next(0, Konfiguration.Quartalsliste.Count)];
+                        else if (Dateiattribute.Keys.Contains("Jahr"))
+                            rückgabe = string.Format("{0}{1}", Dateiattribute["Jahr"], Random.Next(1, 5));
+                        else
+                            rückgabe = string.Format("2017{0}", Random.Next(1, 5));
+                    } while (GrößerGleich != null && string.Compare(Feldliste[GrößerGleich], rückgabe) > 0);
+
+                    return rückgabe;
                 }
             }
         }
