@@ -12,6 +12,7 @@ namespace Datengenerator.Kern
         public Dictionary<string, string> Dateiattribute;
         public Dictionary<string, string> Feldliste;
         public string GrößerGleich;
+        public string LiegtIn;
 
         public FeldQuartalDatum(XElement xml, Random r, Dictionary<string, string> dateiattribute, Dictionary<string, string> feldliste) : base(xml, r)
         {
@@ -23,6 +24,9 @@ namespace Datengenerator.Kern
 
             if (xml.Elements("GrößerGleich").Any())
                 GrößerGleich = xml.Element("GrößerGleich").Value;
+
+            if (xml.Elements("LiegtIn").Any())
+                LiegtIn = xml.Element("LiegtIn").Value;
         }
 
         public override string Generieren()
@@ -69,8 +73,32 @@ namespace Datengenerator.Kern
         {
             if (SchlechtdatenGenerieren && Random.Next(0, SchlechtdatenWahrscheinlichkeit) == 0)
                 return "JJJJMMTT";
+            else if (LiegtIn != null)
+            {
+                string jahr = Feldliste[LiegtIn].Substring(0, 4);
+                string quartal = Feldliste[LiegtIn].Substring(4, 1);
+                string monat = "";
+
+                switch (quartal)
+                {
+                    case "1":
+                        monat = string.Format("{0:00}", Random.Next(1, 4));
+                        break;
+                    case "2":
+                        monat = string.Format("{0:00}", Random.Next(4, 7));
+                        break;
+                    case "3":
+                        monat = string.Format("{0:00}", Random.Next(7, 10));
+                        break;
+                    case "4":
+                        monat = string.Format("{0:00}", Random.Next(10, 13));
+                        break;
+                }
+
+                return string.Format("{0}{1}{2:00}", jahr, monat, Random.Next(1, 28));
+            }
             else
-                return string.Format("2017{0:00}01", Random.Next(1, 13));
+                return string.Format("2017{0:00}{1:00}", Random.Next(1, 13), Random.Next(1, 28));
         }
     }
 }
