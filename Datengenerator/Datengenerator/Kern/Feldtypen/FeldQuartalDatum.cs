@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Datengenerator.Konfig;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
@@ -41,7 +42,9 @@ namespace Datengenerator.Kern
                     return string.Format("{0}{1}", 1950 + Random.Next(0, 60), Random.Next(1, 5));
                 else
                 {
-                    if (Dateiattribute.Keys.Contains("Jahr"))
+                    if (Konfiguration.Quartalsliste.Count > 0)
+                        return Konfiguration.Quartalsliste[Random.Next(0, Konfiguration.Quartalsliste.Count)];
+                    else if(Dateiattribute.Keys.Contains("Jahr"))
                         return string.Format("{0}{1}", Dateiattribute["Jahr"], Random.Next(1, 5));
                     else
                         return string.Format("2017{0}", Random.Next(1, 5));

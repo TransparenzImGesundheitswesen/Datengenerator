@@ -21,6 +21,8 @@ namespace Datengenerator.Konfig
         private static string dateiname = "";
         public static string Pfad = "";
 
+        public static List<string> Quartalsliste = new List<string>();
+
         public static Dictionary<string, List<string>> Dateiattribute = new Dictionary<string, List<string>>();
         public static List<Dictionary<string, string>> DateiattributeKombinationen = new List<Dictionary<string, string>>();
 
@@ -60,6 +62,9 @@ namespace Datengenerator.Konfig
                         break;
                     case "AnzahlZeilen":
                         AnzahlZeilen = int.Parse(komponenten[1].Trim());
+                        break;
+                    case "Quartalsliste":
+                        Quartalsliste = komponenten[1].Split(';').ToList();
                         break;
                 }
             }
