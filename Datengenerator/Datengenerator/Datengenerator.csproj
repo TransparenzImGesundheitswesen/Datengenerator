@@ -60,6 +60,7 @@
     <Compile Include="Kern\Feldtypen\FeldKonstant.cs" />
     <Compile Include="Kern\Feldtypen\FeldKV.cs" />
     <Compile Include="Kern\Feldtypen\FeldPLZ.cs" />
+    <Compile Include="Kern\Feldtypen\FeldQuartalDatum.cs" />
     <Compile Include="Kern\Feldtypen\FeldVsTage.cs" />
     <Compile Include="Kern\RandomProportional.cs" />
     <Compile Include="Kern\Schlüsselverzeichnis.cs" />

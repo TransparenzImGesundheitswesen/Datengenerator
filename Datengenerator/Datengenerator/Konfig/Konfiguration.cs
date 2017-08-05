@@ -23,7 +23,6 @@ namespace Datengenerator.Konfig
 
         public static Dictionary<string, List<string>> Dateiattribute = new Dictionary<string, List<string>>();
         public static List<Dictionary<string, string>> DateiattributeKombinationen = new List<Dictionary<string, string>>();
-        //public static Dictionary<string, string> AktuelleDateiattributeKombinationen;
 
 
         static Konfiguration()

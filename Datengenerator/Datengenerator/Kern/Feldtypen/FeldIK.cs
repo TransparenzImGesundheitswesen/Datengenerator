@@ -7,8 +7,9 @@ namespace Datengenerator.Kern
     class FeldIK : Feld
     {
         public string Dateiattribut;
+        public Dictionary<string, string> Dateiattribute;
 
-        public FeldIK(XElement xml, Random r, Dictionary<string, string> dateiattribute) : base(xml, r, dateiattribute)
+        public FeldIK(XElement xml, Random r, Dictionary<string, string> dateiattribute) : base(xml, r)
         {
             Dateiattribute = dateiattribute;
             Dateiattribut = xml.Element("Dateiattribut").Value;

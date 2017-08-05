@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace Datengenerator.Kern
@@ -30,7 +28,7 @@ namespace Datengenerator.Kern
 
             foreach (XElement feldXml in FelderXml.Elements("Feld"))
             {
-                Feld feld = new Feld(feldXml, Random, Dateiattribute);
+                Feld feld = new Feld(feldXml, Random);
 
                 if (fremdschlüssel != null && fremdschlüssel.Count > 0 && fremdschlüssel.Keys.Contains(feld.Nummer)
                     && !(Konfiguration.SchlechtdatenWahrscheinlichkeitFremdschlüssel > 0 && Random.Next(0, Konfiguration.SchlechtdatenWahrscheinlichkeitFremdschlüssel) == 0))
@@ -60,6 +58,8 @@ namespace Datengenerator.Kern
                             feld = new FeldKonstant(feldXml, Random);
                         else if (feldXml.Elements("ZulässigeWerte").Any())
                             feld = new FeldEnum(feldXml, Random);
+                        else if (feldXml.Elements("Format").Any())
+                            feld = new FeldQuartalDatum(feldXml, Random, Dateiattribute);
                         else if (feldXml.Attributes("Typ").Any())
                         {
                             if (feldXml.Attributes("Typ").First().Value == "Hash")

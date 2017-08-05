@@ -8,7 +8,6 @@ using Datengenerator.Kern;
 using Datengenerator.Konfig;
 using Datengenerator.Loggen;
 using Datengenerator.XML;
-using System.Threading;
 
 namespace Datengenerator
 {

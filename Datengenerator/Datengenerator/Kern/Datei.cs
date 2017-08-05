@@ -1,24 +1,20 @@
 ﻿using Datengenerator.Konfig;
-using Datengenerator.Loggen;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace Datengenerator.Kern
 {
     class Datei
     {
-        private string Satzartname;
-        private string Dateiname;
-        private XElement SatzartXml;
-        private List<string> Primärschlüsselfelder;
-        private List<string> Primärschlüssel = new List<string>();
+        private string satzartname;
+        private string dateiname;
+        private XElement satzartXml;
+        private List<string> primärschlüsselfelder;
+        private List<string> primärschlüssel = new List<string>();
         public bool HatFremdschlüssel;
-        private List<string> Fremdschlüsselfelder;
+        private List<string> fremdschlüsselfelder;
         private Dictionary<string, string> dateiattribute;
 
         private Random r = new Random(1);
@@ -26,31 +22,31 @@ namespace Datengenerator.Kern
 
         public Datei(XElement satzartXml, List<Datei> alleDateien, Dictionary<string, string> dateiattribute)
         {
-            SatzartXml = satzartXml;
-            
-            Satzartname = SatzartXml.Attribute("Name").Value;
+            this.satzartXml = satzartXml;
 
-            if (SatzartXml.Descendants("Primärschlüssel").Descendants("Feld").Any())
-                Primärschlüsselfelder = SatzartXml.Descendants("Primärschlüssel").Descendants("Feld").Select(m => m.Value).ToList();
+            satzartname = this.satzartXml.Attribute("Name").Value;
 
-            HatFremdschlüssel = SatzartXml.Descendants("Fremdschlüssel").Any();
+            if (satzartXml.Descendants("Primärschlüssel").Descendants("Feld").Any())
+                primärschlüsselfelder = satzartXml.Descendants("Primärschlüssel").Descendants("Feld").Select(m => m.Value).ToList();
+
+            HatFremdschlüssel = satzartXml.Descendants("Fremdschlüssel").Any();
 
             if (HatFremdschlüssel && alleDateien.Count > 0)
             {
-                string fremdschlüsselsatzart = SatzartXml.Descendants("Fremdschlüssel").Descendants("Satzart").Select(m => m.Value).First();
-                alleDateien.Where(m => m.Satzartname == fremdschlüsselsatzart).First().ZeileGeneriert += ZeileGenerieren;
+                string fremdschlüsselsatzart = satzartXml.Descendants("Fremdschlüssel").Descendants("Satzart").Select(m => m.Value).First();
+                alleDateien.Where(m => m.satzartname == fremdschlüsselsatzart).First().ZeileGeneriert += ZeileGenerieren;
 
-                Fremdschlüsselfelder = SatzartXml.Descendants("Fremdschlüssel").Descendants("Feld").Select(m => m.Value).ToList();
+                fremdschlüsselfelder = satzartXml.Descendants("Fremdschlüssel").Descendants("Feld").Select(m => m.Value).ToList();
             }
 
             //Dateiname = string.Format("{0}_.{1}", Satzartname, Endung).ZeitstempelAnhängen();
-            Dateiname = Konfiguration.Dateiname;
-            Dateiname = Dateiname.Replace("{Satzart}", Satzartname);
+            dateiname = Konfiguration.Dateiname;
+            dateiname = dateiname.Replace("{Satzart}", satzartname);
 
             this.dateiattribute = dateiattribute;
 
             foreach (string attribut in dateiattribute.Keys)
-                Dateiname = Dateiname.Replace(string.Format("{{{0}}}", attribut), dateiattribute[attribut]);
+                dateiname = dateiname.Replace(string.Format("{{{0}}}", attribut), dateiattribute[attribut]);
         }
 
         public void Generieren()
@@ -67,22 +63,22 @@ namespace Datengenerator.Kern
                 {
                     primärschlüssel.Clear();
 
-                    zeile = new Zeile(SatzartXml.Element("Felder"), r, rp, dateiattribute);
+                    zeile = new Zeile(satzartXml.Element("Felder"), r, rp, dateiattribute);
                     zeileString = zeile.Generieren(null);
                     primärschlüsselString = "";
 
-                    if (Primärschlüsselfelder != null)
-                        foreach (string feld in Primärschlüsselfelder)
+                    if (primärschlüsselfelder != null)
+                        foreach (string feld in primärschlüsselfelder)
                         {
                             primärschlüsselString += zeile.Feldliste[feld];
                             primärschlüssel.Add(feld, zeile.Feldliste[feld]);
                         }
-                } while (Primärschlüsselfelder != null && Primärschlüssel.Contains(primärschlüsselString) && !(Konfiguration.SchlechtdatenWahrscheinlichkeit != 0 && r.Next(0, Konfiguration.SchlechtdatenWahrscheinlichkeit) == 0));
+                } while (primärschlüsselfelder != null && this.primärschlüssel.Contains(primärschlüsselString) && !(Konfiguration.SchlechtdatenWahrscheinlichkeit != 0 && r.Next(0, Konfiguration.SchlechtdatenWahrscheinlichkeit) == 0));
 
-                if (Primärschlüsselfelder != null)
-                    Primärschlüssel.Add(primärschlüsselString);
+                if (primärschlüsselfelder != null)
+                    this.primärschlüssel.Add(primärschlüsselString);
 
-                Schreiber.Schreiben(Dateiname, zeileString);
+                Schreiber.Schreiben(dateiname, zeileString);
 
                 OnZeileGeneriert(new ZeileGeneriertEventArgs(primärschlüssel));
 
@@ -143,22 +139,22 @@ namespace Datengenerator.Kern
 
             do
             {
-                zeile = new Zeile(SatzartXml.Element("Felder"), r, rp, dateiattribute);
+                zeile = new Zeile(satzartXml.Element("Felder"), r, rp, dateiattribute);
                 zeileString = zeile.Generieren(fremdschlüssel);
                 primärschlüsselString = "";
 
-                if (Primärschlüsselfelder != null)
-                    foreach (string feld in Primärschlüsselfelder)
+                if (primärschlüsselfelder != null)
+                    foreach (string feld in primärschlüsselfelder)
                     {
                         primärschlüsselString += zeile.Feldliste[feld];
                         primärschlüssel.Add(feld, zeile.Feldliste[feld]);
                     }
-            } while (Primärschlüsselfelder != null && Primärschlüssel.Contains(primärschlüsselString) && !(Konfiguration.SchlechtdatenWahrscheinlichkeit != 0 && r.Next(0, Konfiguration.SchlechtdatenWahrscheinlichkeit) == 0));
+            } while (primärschlüsselfelder != null && this.primärschlüssel.Contains(primärschlüsselString) && !(Konfiguration.SchlechtdatenWahrscheinlichkeit != 0 && r.Next(0, Konfiguration.SchlechtdatenWahrscheinlichkeit) == 0));
 
-            if (Primärschlüsselfelder != null)
-                Primärschlüssel.Add(primärschlüsselString);
+            if (primärschlüsselfelder != null)
+                this.primärschlüssel.Add(primärschlüsselString);
 
-            Schreiber.Schreiben(Dateiname, zeileString);
+            Schreiber.Schreiben(dateiname, zeileString);
 
             OnZeileGeneriert(new ZeileGeneriertEventArgs(primärschlüssel));
         }

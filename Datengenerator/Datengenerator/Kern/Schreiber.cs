@@ -1,5 +1,4 @@
 ﻿using Datengenerator.Konfig;
-using Datengenerator.Loggen;
 using System;
 using System.Collections.Generic;
 using System.IO;

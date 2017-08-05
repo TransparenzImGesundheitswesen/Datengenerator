@@ -7,7 +7,7 @@ namespace Datengenerator.Kern
     {
         public string SchlüsselverzeichnisName;
 
-        public FeldFGCode(XElement xml, Random r) : base(xml, r, null)
+        public FeldFGCode(XElement xml, Random r) : base(xml, r)
         {
             SchlüsselverzeichnisName = "FGCode";
         }
