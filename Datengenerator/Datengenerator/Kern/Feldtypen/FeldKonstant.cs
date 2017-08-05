@@ -7,7 +7,7 @@ namespace Datengenerator.Kern
     {
         public string Konstant;
 
-        public FeldKonstant(XElement xml, Random r) : base(xml, r)
+        public FeldKonstant(XElement xml, Random r) : base(xml, r, null)
         {
             Konstant = xml.Element("Konstant").Value;
         }

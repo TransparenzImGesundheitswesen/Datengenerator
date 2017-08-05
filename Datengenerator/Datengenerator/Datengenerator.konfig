@@ -4,7 +4,10 @@ XML: XML-Testdateien/ASV.xml
 Validieren: 1
 
 # Zulässige Werte: 0 oder das N in 1/N
-SchlechtdatenWahrscheinlichkeit: 20000
-SchlechtdatenWahrscheinlichkeitFremdschlüssel: 20000
+SchlechtdatenWahrscheinlichkeit: 0
+SchlechtdatenWahrscheinlichkeitFremdschlüssel: 0
 
 AnzahlZeilen: 5000
+
+_Jahr:2016;2017
+_Version:001

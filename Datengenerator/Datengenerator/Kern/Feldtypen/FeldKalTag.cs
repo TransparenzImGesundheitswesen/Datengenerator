@@ -5,7 +5,7 @@ namespace Datengenerator.Kern
 {
     class FeldKalTag : Feld
     {
-        public FeldKalTag(XElement xml, Random r) : base(xml, r)
+        public FeldKalTag(XElement xml, Random r) : base(xml, r, null)
         {
         }
 

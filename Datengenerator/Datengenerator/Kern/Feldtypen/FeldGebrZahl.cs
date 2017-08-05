@@ -8,7 +8,7 @@ namespace Datengenerator.Kern
         private int stellenVor;
         private int stellenNach;
 
-        public FeldGebrZahl(XElement xml, Random r) : base(xml, r)
+        public FeldGebrZahl(XElement xml, Random r) : base(xml, r, null)
         {
             string[] komponenten = xml.Element("Stellen").Value.Split(',');
 

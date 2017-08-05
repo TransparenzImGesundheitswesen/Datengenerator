@@ -14,21 +14,20 @@ namespace Datengenerator.Kern
     {
         private string Satzartname;
         private string Dateiname;
-        private string Endung;
         private XElement SatzartXml;
         private List<string> Primärschlüsselfelder;
         private List<string> Primärschlüssel = new List<string>();
         public bool HatFremdschlüssel;
         private List<string> Fremdschlüsselfelder;
+        private Dictionary<string, string> dateiattribute;
 
-        private Random r = new Random();
+        private Random r = new Random(1);
         private RandomProportional rp = new RandomProportional();
 
-        public Datei(XElement satzartXml, List<Datei> alleDateien)
+        public Datei(XElement satzartXml, List<Datei> alleDateien, Dictionary<string, string> dateiattribute)
         {
             SatzartXml = satzartXml;
             
-            Endung = "csv";
             Satzartname = SatzartXml.Attribute("Name").Value;
 
             if (SatzartXml.Descendants("Primärschlüssel").Descendants("Feld").Any())
@@ -44,7 +43,14 @@ namespace Datengenerator.Kern
                 Fremdschlüsselfelder = SatzartXml.Descendants("Fremdschlüssel").Descendants("Feld").Select(m => m.Value).ToList();
             }
 
-            Dateiname = string.Format("{0}_.{1}", Satzartname, Endung).ZeitstempelAnhängen();
+            //Dateiname = string.Format("{0}_.{1}", Satzartname, Endung).ZeitstempelAnhängen();
+            Dateiname = Konfiguration.Dateiname;
+            Dateiname = Dateiname.Replace("{Satzart}", Satzartname);
+
+            this.dateiattribute = dateiattribute;
+
+            foreach (string attribut in dateiattribute.Keys)
+                Dateiname = Dateiname.Replace(string.Format("{{{0}}}", attribut), dateiattribute[attribut]);
         }
 
         public void Generieren()
@@ -61,7 +67,7 @@ namespace Datengenerator.Kern
                 {
                     primärschlüssel.Clear();
 
-                    zeile = new Zeile(SatzartXml.Element("Felder"), r, rp);
+                    zeile = new Zeile(SatzartXml.Element("Felder"), r, rp, dateiattribute);
                     zeileString = zeile.Generieren(null);
                     primärschlüsselString = "";
 
@@ -80,7 +86,14 @@ namespace Datengenerator.Kern
 
                 OnZeileGeneriert(new ZeileGeneriertEventArgs(primärschlüssel));
 
-                Console.WriteLine(i);
+                if (i % 1000 == 0)
+                {
+                    string ausgabe = "";
+                    foreach (string schlüssel in dateiattribute.Keys)
+                        ausgabe += string.Format("{0}: {1}, ", schlüssel, dateiattribute[schlüssel]);
+                    ausgabe += i;
+                    Console.WriteLine(ausgabe);
+                }
             }
         }
 
@@ -130,7 +143,7 @@ namespace Datengenerator.Kern
 
             do
             {
-                zeile = new Zeile(SatzartXml.Element("Felder"), r, rp);
+                zeile = new Zeile(SatzartXml.Element("Felder"), r, rp, dateiattribute);
                 zeileString = zeile.Generieren(fremdschlüssel);
                 primärschlüsselString = "";
 

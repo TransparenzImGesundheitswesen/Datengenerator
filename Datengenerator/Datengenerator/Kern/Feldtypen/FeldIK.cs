@@ -1,15 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Xml.Linq;
 
 namespace Datengenerator.Kern
 {
     class FeldIK : Feld
     {
-        public string SchlüsselverzeichnisName;
+        public string Dateiattribut;
 
-        public FeldIK(XElement xml, Random r) : base(xml, r)
+        public FeldIK(XElement xml, Random r, Dictionary<string, string> dateiattribute) : base(xml, r, dateiattribute)
         {
-            SchlüsselverzeichnisName = xml.Element("Schlüsselverzeichnis").Value;
+            Dateiattribute = dateiattribute;
+            Dateiattribut = xml.Element("Dateiattribut").Value;
         }
 
         public override string Generieren()
@@ -22,7 +24,7 @@ namespace Datengenerator.Kern
                     return "012345678";
             }
             else
-                return Schlüsselverzeichnismanager.ZufälligerEintrag(SchlüsselverzeichnisName);
+                return Dateiattribute[Dateiattribut];
         }
     }
 }

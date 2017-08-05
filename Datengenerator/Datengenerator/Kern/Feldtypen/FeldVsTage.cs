@@ -11,7 +11,7 @@ namespace Datengenerator.Kern
     {
         public readonly Random Prop;
 
-        public FeldVsTage(XElement xml, Random r, Random prop) : base(xml, r)
+        public FeldVsTage(XElement xml, Random r, Random prop) : base(xml, r, null)
         {
             Prop = prop;
         }

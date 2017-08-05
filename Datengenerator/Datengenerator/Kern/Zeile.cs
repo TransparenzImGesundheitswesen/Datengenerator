@@ -14,12 +14,14 @@ namespace Datengenerator.Kern
         public readonly Random Random;
         public readonly RandomProportional RandomProp;
         public Dictionary<string, string> Feldliste = new Dictionary<string, string>();
+        public Dictionary<string, string> Dateiattribute = new Dictionary<string, string>();
 
-        public Zeile(XElement felderXml, Random r, RandomProportional rp)
+        public Zeile(XElement felderXml, Random r, RandomProportional rp, Dictionary<string, string> dateiattribute)
         {
             FelderXml = felderXml;
             Random = r;
             RandomProp = rp;
+            Dateiattribute = dateiattribute;
         }
 
         public string Generieren(Dictionary<string, string> fremdschlüssel)
@@ -28,7 +30,7 @@ namespace Datengenerator.Kern
 
             foreach (XElement feldXml in FelderXml.Elements("Feld"))
             {
-                Feld feld = new Feld(feldXml, Random);
+                Feld feld = new Feld(feldXml, Random, Dateiattribute);
 
                 if (fremdschlüssel != null && fremdschlüssel.Count > 0 && fremdschlüssel.Keys.Contains(feld.Nummer)
                     && !(Konfiguration.SchlechtdatenWahrscheinlichkeitFremdschlüssel > 0 && Random.Next(0, Konfiguration.SchlechtdatenWahrscheinlichkeitFremdschlüssel) == 0))
@@ -63,7 +65,7 @@ namespace Datengenerator.Kern
                             if (feldXml.Attributes("Typ").First().Value == "Hash")
                                 feld = new FeldHash(feldXml, Random);
                             else if (feldXml.Attributes("Typ").First().Value == "IK")
-                                feld = new FeldIK(feldXml, Random);
+                                feld = new FeldIK(feldXml, Random, Dateiattribute);
                             else if (feldXml.Attributes("Typ").First().Value == "KV")
                                 feld = new FeldKV(feldXml, Random);
                             else if (feldXml.Attributes("Typ").First().Value == "PLZ")

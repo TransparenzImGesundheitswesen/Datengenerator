@@ -9,7 +9,7 @@ namespace Datengenerator.Kern
     {
         public List<string> ZulässigeWerte;
 
-        public FeldEnum(XElement xml, Random r) : base(xml, r)
+        public FeldEnum(XElement xml, Random r) : base(xml, r, null)
         {
             ZulässigeWerte = xml.Descendants("Wert").Select(m => m.Value).ToList();
         }

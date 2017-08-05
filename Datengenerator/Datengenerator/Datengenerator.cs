@@ -40,6 +40,7 @@ namespace Datengenerator
             Schlüsselverzeichnismanager.SchlüsselverzeichnisseHinzufügen(schlüsselverzeichnisseXml);
 
             Konfiguration.Zeichensatz = xml.Descendants("Dateikonventionen").Descendants("Zeichensatz").Select(m => m.Value).First();
+            Konfiguration.Dateiname = xml.Descendants("Dateikonventionen").Descendants("Dateiname").Select(m => m.Value).First();
 
             string feldtrennzeichen = xml.Descendants("Dateikonventionen").Descendants("Feldtrennzeichen").Select(m => m.Value).First();
             if (feldtrennzeichen.StartsWith("0x"))
@@ -55,33 +56,27 @@ namespace Datengenerator
             else
                 Konfiguration.Zeilentrennzeichen = zeilentrennzeichen;
 
-            // Dieser Code geht davon aus, dass in der XML-Datei die Satzarten mit der Fremdschlüsselbeziehung
-            // immer nach der Satzart steht, auf die die Beziehung zeigt, damit die Event-Registrierung klappt    
-            IEnumerable<XElement> satzartenXml = xml.Descendants("Satzarten");
-            List<Datei> alleDateien = new List<Datei>();
-
-            foreach (XElement satzartXml in satzartenXml.Elements("Satzart"))
+            //foreach (Dictionary<string, string> dateiattribute in Konfiguration.DateiattributeKombinationen)
+            Parallel.ForEach(Konfiguration.DateiattributeKombinationen, dateiattribute =>
             {
-                Datei datei = new Datei(satzartXml, alleDateien);
-                alleDateien.Add(datei);
-            }
+                //Konfiguration.AktuelleDateiattributeKombinationen = dateiattribute;
 
-            foreach(Datei datei in alleDateien.Where(m => !m.HatFremdschlüssel))
-            {
-                datei.Generieren();
-            }
+                // Dieser Code geht davon aus, dass in der XML-Datei die Satzarten mit der Fremdschlüsselbeziehung
+                // immer nach der Satzart steht, auf die die Beziehung zeigt, damit die Event-Registrierung klappt    
+                IEnumerable<XElement> satzartenXml = xml.Descendants("Satzarten");
+                List<Datei> alleDateien = new List<Datei>();
 
-            //Parallel.ForEach(alleDateien.Where(m => !m.HatFremdschlüssel), datei =>
-            //{
-            //    datei.Generieren(Konfiguration.AnzahlZeilen, Konfiguration.SchlechtdatenWahrscheinlichkeit);
-            //});
-            
-            //Thread.Sleep(5000);
+                foreach (XElement satzartXml in satzartenXml.Elements("Satzart"))
+                {
+                    Datei datei = new Datei(satzartXml, alleDateien, dateiattribute);
+                    alleDateien.Add(datei);
+                }
 
-            //foreach(Datei datei in alleDateien)
-            //{
-            //    datei.Schreiben();
-            //}
+                foreach (Datei datei in alleDateien.Where(m => !m.HatFremdschlüssel))
+                {
+                    datei.Generieren();
+                }
+            });
 
             Console.WriteLine("Narf!");
             Console.ReadLine();

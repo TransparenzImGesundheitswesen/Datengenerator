@@ -11,22 +11,22 @@ namespace Datengenerator.Kern
         public string Nummer;
         public string Name;
         public Feldart Art;
-        //public Feldeigenschaft Eigenschaft;
         public string Format;
-        //public string Erläuterung;
+        public Dictionary<string, string> Dateiattribute;
 
         public readonly Random Random;
         public readonly bool SchlechtdatenGenerieren;
         public readonly int SchlechtdatenWahrscheinlichkeit;
 
 
-        public Feld(XElement xml, Random r)
+        public Feld(XElement xml, Random r, Dictionary<string, string> dateiattribute)
         {
             Nummer = xml.Attribute("Nummer").Value;
             Name = xml.Element("Name").Value;
             Art = (Feldart)Enum.Parse(typeof(Feldart), xml.Element("Art").Value);
 
             Random = r;
+            Dateiattribute = dateiattribute;
             SchlechtdatenGenerieren = Konfiguration.SchlechtdatenWahrscheinlichkeit != 0;
             SchlechtdatenWahrscheinlichkeit = Konfiguration.SchlechtdatenWahrscheinlichkeit;
 
@@ -54,10 +54,17 @@ namespace Datengenerator.Kern
             if (SchlechtdatenGenerieren && Random.Next(0, SchlechtdatenWahrscheinlichkeit) == 0)
                 return "QQQQQ";
             else
+            {
                 if (Name.Contains("Geburts"))
                     return string.Format("{0}{1}", 1950 + Random.Next(0, 60), Random.Next(1, 5));
                 else
-                    return string.Format("2017{0}", Random.Next(1, 5));
+                {
+                    if (Dateiattribute.Keys.Contains("Jahr"))
+                        return string.Format("{0}{1}", Dateiattribute["Jahr"], Random.Next(1, 5));
+                    else
+                        return string.Format("2017{0}", Random.Next(1, 5));
+                }
+            }
         }
 
         private string GenerierenDatum()

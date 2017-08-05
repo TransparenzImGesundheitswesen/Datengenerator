@@ -7,7 +7,7 @@ namespace Datengenerator.Kern
     {
         public string SchlüsselverzeichnisName;
 
-        public FeldGOP(XElement xml, Random r) : base(xml, r)
+        public FeldGOP(XElement xml, Random r) : base(xml, r, null)
         {
             SchlüsselverzeichnisName = "GOP";
         }

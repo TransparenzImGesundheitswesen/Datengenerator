@@ -7,7 +7,7 @@ namespace Datengenerator.Kern
 {
     class FeldHash : Feld
     {
-        public FeldHash(XElement xml, Random r) : base(xml, r)
+        public FeldHash(XElement xml, Random r) : base(xml, r, null)
         {
         }
 

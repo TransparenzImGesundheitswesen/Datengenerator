@@ -1,4 +1,5 @@
 ﻿using Datengenerator.Konfig;
+using Datengenerator.Loggen;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,7 +18,8 @@ namespace Datengenerator.Kern
             lock (theLock)
             {
                 if (!dateien.Where(m => m.Item1 == dateiname).Any())
-                    dateien.Add(new Tuple<string, StreamWriter>(dateiname, new StreamWriter(dateiname, true, Encoding.GetEncoding(Konfiguration.Zeichensatz))));
+                    dateien.Add(new Tuple<string, StreamWriter>(dateiname, new StreamWriter(
+                        string.Format("{0}/{1}", Konfiguration.Pfad, dateiname), false, Encoding.GetEncoding(Konfiguration.Zeichensatz))));
 
                 dateien.Where(m => m.Item1 == dateiname).First().Item2.Write(zeile);
                 dateien.Where(m => m.Item1 == dateiname).First().Item2.Flush();
