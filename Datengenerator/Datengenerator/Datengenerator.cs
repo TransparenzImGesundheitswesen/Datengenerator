@@ -75,6 +75,8 @@ namespace Datengenerator
                 }
             });
 
+            Logger.SchlechtfelderSpeichern();
+
             Console.WriteLine("Narf!");
             Console.ReadLine();
         }

@@ -16,10 +16,12 @@ namespace Datengenerator.Kern
             Prop = prop;
         }
 
-        public override string Generieren()
+        public override string Generieren(out bool schlecht)
         {
             if (SchlechtdatenGenerieren && Random.Next(0, SchlechtdatenWahrscheinlichkeit) == 0)
             {
+                schlecht = true;
+
                 switch (Random.Next(0, 3))
                 {
                     case 0:
@@ -31,7 +33,10 @@ namespace Datengenerator.Kern
                 }
             }
             else
+            {
+                schlecht = false;
                 return (1 + Prop.Next(90)).ToString();
+            }
         }
     }
 }

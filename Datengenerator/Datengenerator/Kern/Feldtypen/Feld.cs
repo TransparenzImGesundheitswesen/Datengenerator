@@ -26,7 +26,7 @@ namespace Datengenerator.Kern
             SchlechtdatenWahrscheinlichkeit = Konfiguration.SchlechtdatenWahrscheinlichkeit;
         }
 
-        public virtual string Generieren()
+        public virtual string Generieren(out bool schlecht)
         {
             throw new NotImplementedException();
         }

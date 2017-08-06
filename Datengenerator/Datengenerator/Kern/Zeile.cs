@@ -1,8 +1,9 @@
-﻿using Datengenerator.Konfig;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using Datengenerator.Konfig;
+using Datengenerator.Loggen;
 
 namespace Datengenerator.Kern
 {
@@ -22,7 +23,7 @@ namespace Datengenerator.Kern
             Dateiattribute = dateiattribute;
         }
 
-        public string Generieren(Dictionary<string, string> fremdschlüssel)
+        public string Generieren(Dictionary<string, string> fremdschlüssel, string dateiname, int zeilennummer)
         {
             string zeile = "";
 
@@ -88,9 +89,12 @@ namespace Datengenerator.Kern
                                 feld = new FeldFreitext(feldXml, Random);
                         }
 
-                        string wert = feld.Generieren();
+                        string wert = feld.Generieren(out bool schlecht);
                         Feldliste.Add(feld.Nummer, wert);
                         zeile += wert + Konfiguration.Feldtrennzeichen;
+
+                        if (schlecht)
+                            Logger.LoggenSchlechtfeld(new Schlechtfeld { Dateiname = dateiname, Zeile = zeilennummer + 1, Feld = feld.Nummer });
                     }
                 }
             }

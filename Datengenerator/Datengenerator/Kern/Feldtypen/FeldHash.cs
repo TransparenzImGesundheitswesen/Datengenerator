@@ -11,10 +11,12 @@ namespace Datengenerator.Kern
         {
         }
 
-        public override string Generieren()
+        public override string Generieren(out bool schlecht)
         {
             if (SchlechtdatenGenerieren && Random.Next(0, SchlechtdatenWahrscheinlichkeit) == 0)
             {
+                schlecht = true;
+
                 if (Random.Next(0, 2) == 0)
                     return "ABCDEF";
                 else
@@ -22,6 +24,8 @@ namespace Datengenerator.Kern
             }
             else
             {
+                schlecht = false;
+
                 RIPEMD160 ripe = RIPEMD160.Create();
                 byte[] bytes = Encoding.ASCII.GetBytes(Guid.NewGuid().ToString());
                 byte[] hash = ripe.ComputeHash(bytes);

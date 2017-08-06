@@ -17,8 +17,10 @@ namespace Datengenerator.Kern
         private List<string> fremdschlüsselfelder;
         private Dictionary<string, string> dateiattribute;
 
-        private Random r = new Random(1);
+        private Random r = new Random();
         private RandomProportional rp = new RandomProportional();
+
+        private int zeilennummer = 0;
 
         public Datei(XElement satzartXml, List<Datei> alleDateien, Dictionary<string, string> dateiattribute)
         {
@@ -53,7 +55,7 @@ namespace Datengenerator.Kern
         {
             Dictionary<string, string> primärschlüssel = new Dictionary<string, string>();
 
-            for (int i = 0; i < Konfiguration.AnzahlZeilen; i++)
+            while (zeilennummer < Konfiguration.AnzahlZeilen)
             {
                 string primärschlüsselString = "";
                 Zeile zeile;
@@ -64,7 +66,7 @@ namespace Datengenerator.Kern
                     primärschlüssel.Clear();
 
                     zeile = new Zeile(satzartXml.Element("Felder"), r, rp, dateiattribute);
-                    zeileString = zeile.Generieren(null);
+                    zeileString = zeile.Generieren(null, dateiname, zeilennummer);
                     primärschlüsselString = "";
 
                     if (primärschlüsselfelder != null)
@@ -79,15 +81,16 @@ namespace Datengenerator.Kern
                     this.primärschlüssel.Add(primärschlüsselString);
 
                 Schreiber.Schreiben(dateiname, zeileString);
+                zeilennummer++;
 
                 OnZeileGeneriert(new ZeileGeneriertEventArgs(primärschlüssel));
 
-                if (i % 1000 == 0)
+                if (zeilennummer % 1000 == 0)
                 {
                     string ausgabe = "";
                     foreach (string schlüssel in dateiattribute.Keys)
                         ausgabe += string.Format("{0}: {1}, ", schlüssel, dateiattribute[schlüssel]);
-                    ausgabe += i;
+                    ausgabe += zeilennummer;
                     Console.WriteLine(ausgabe);
                 }
             }
@@ -140,7 +143,7 @@ namespace Datengenerator.Kern
             do
             {
                 zeile = new Zeile(satzartXml.Element("Felder"), r, rp, dateiattribute);
-                zeileString = zeile.Generieren(fremdschlüssel);
+                zeileString = zeile.Generieren(fremdschlüssel, dateiname, zeilennummer);
                 primärschlüsselString = "";
 
                 if (primärschlüsselfelder != null)
@@ -155,6 +158,7 @@ namespace Datengenerator.Kern
                 this.primärschlüssel.Add(primärschlüsselString);
 
             Schreiber.Schreiben(dateiname, zeileString);
+            zeilennummer++;
 
             OnZeileGeneriert(new ZeileGeneriertEventArgs(primärschlüssel));
         }

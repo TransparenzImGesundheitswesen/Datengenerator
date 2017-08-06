@@ -63,6 +63,7 @@
     <Compile Include="Kern\Feldtypen\FeldQuartalDatum.cs" />
     <Compile Include="Kern\Feldtypen\FeldVsTage.cs" />
     <Compile Include="Kern\RandomProportional.cs" />
+    <Compile Include="Kern\Schlechtfeld.cs" />
     <Compile Include="Kern\Schlüsselverzeichnis.cs" />
     <Compile Include="Kern\Schlüsselverzeichnismanager.cs" />
     <Compile Include="Kern\Schreiber.cs" />

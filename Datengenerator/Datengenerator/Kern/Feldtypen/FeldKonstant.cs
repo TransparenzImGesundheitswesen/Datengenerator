@@ -12,12 +12,18 @@ namespace Datengenerator.Kern
             Konstant = xml.Element("Konstant").Value;
         }
 
-        public override string Generieren()
+        public override string Generieren(out bool schlecht)
         {
             if (SchlechtdatenGenerieren && Random.Next(0, SchlechtdatenWahrscheinlichkeit) == 0)
+            {
+                schlecht = true;
                 return "Narf!";
+            }
             else
+            {
+                schlecht = false;
                 return Konstant;
+            }
         }
     }
 }

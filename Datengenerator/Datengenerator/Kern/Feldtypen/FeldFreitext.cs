@@ -14,12 +14,18 @@ namespace Datengenerator.Kern
             stellen = int.Parse(xml.Element("Stellen").Value.Replace("<=", ""));
         }
 
-        public override string Generieren()
+        public override string Generieren(out bool schlecht)
         {
             if (SchlechtdatenGenerieren && Random.Next(0, SchlechtdatenWahrscheinlichkeit) == 0)
+            {
+                schlecht = true;
                 return blindtext.Substring(0, stellen + 1);
+            }
             else
+            {
+                schlecht = false;
                 return blindtext.Substring(0, stellen);
+            }
         }
     }
 }

@@ -12,12 +12,18 @@ namespace Datengenerator.Kern
             SchlüsselverzeichnisName = "FGCode";
         }
 
-        public override string Generieren()
+        public override string Generieren(out bool schlecht)
         {
             if (SchlechtdatenGenerieren && Random.Next(0, SchlechtdatenWahrscheinlichkeit) == 0)
+            {
+                schlecht = true;
                 return "FG";
+            }
             else
+            {
+                schlecht = false;
                 return Schlüsselverzeichnismanager.ZufälligerEintrag(SchlüsselverzeichnisName);
+            }
         }
     }
 }

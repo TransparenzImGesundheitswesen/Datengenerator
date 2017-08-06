@@ -14,12 +14,18 @@ namespace Datengenerator.Kern
             ZulässigeWerte = xml.Descendants("Wert").Select(m => m.Value).ToList();
         }
 
-        public override string Generieren()
+        public override string Generieren(out bool schlecht)
         {
             if (SchlechtdatenGenerieren && Random.Next(0, SchlechtdatenWahrscheinlichkeit) == 0)
+            {
+                schlecht = true;
                 return "999";
+            }
             else
+            {
+                schlecht = false;
                 return ZulässigeWerte[Random.Next(0, ZulässigeWerte.Count)];
+            }
         }
     }
 }

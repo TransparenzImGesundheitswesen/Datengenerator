@@ -12,17 +12,22 @@ namespace Datengenerator.Kern
         {
         }
 
-        public override string Generieren()
+        public override string Generieren(out bool schlecht)
         {
             if (SchlechtdatenGenerieren && Random.Next(0, SchlechtdatenWahrscheinlichkeit) == 0)
             {
+                schlecht = true;
+
                 if (Random.Next(0, 2) == 0)
                     return "04";
                 else
                     return "AB";
             }
             else
+            {
+                schlecht = false;
                 return KVen[Random.Next(KVen.Count)];
+            }
         }
     }
 }

@@ -15,17 +15,22 @@ namespace Datengenerator.Kern
             Dateiattribut = xml.Element("Dateiattribut").Value;
         }
 
-        public override string Generieren()
+        public override string Generieren(out bool schlecht)
         {
             if (SchlechtdatenGenerieren && Random.Next(0, SchlechtdatenWahrscheinlichkeit) == 0)
             {
+                schlecht = true;
+
                 if (Random.Next(0, 2) == 0)
                     return "ABC";
                 else
                     return "012345678";
             }
             else
+            {
+                schlecht = false;
                 return Dateiattribute[Dateiattribut];
+            }
         }
     }
 }

@@ -12,10 +12,12 @@ namespace Datengenerator.Kern
             stellen = int.Parse(xml.Element("Stellen").Value.Replace("<=", ""));
         }
 
-        public override string Generieren()
+        public override string Generieren(out bool schlecht)
         {
             if (SchlechtdatenGenerieren && Random.Next(0, SchlechtdatenWahrscheinlichkeit) == 0)
             {
+                schlecht = true;
+
                 if (Random.Next(0, 2) == 0)
                     return "ABC";
                 else
@@ -23,6 +25,8 @@ namespace Datengenerator.Kern
             }
             else
             {
+                schlecht = false;
+
                 int max = (int)Math.Pow(10, stellen);
                 return Random.Next(1, max).ToString();
             }
