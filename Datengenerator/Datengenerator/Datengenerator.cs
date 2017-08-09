@@ -55,8 +55,8 @@ namespace Datengenerator
             else
                 Konfiguration.Zeilentrennzeichen = zeilentrennzeichen;
 
-            //foreach (Dictionary<string, string> dateiattribute in Konfiguration.DateiattributeKombinationen)
-            Parallel.ForEach(Konfiguration.DateiattributeKombinationen, dateiattribute =>
+            foreach (Dictionary<string, string> dateiattribute in Konfiguration.DateiattributeKombinationen)
+            //Parallel.ForEach(Konfiguration.DateiattributeKombinationen, dateiattribute =>
             {
                 // Dieser Code geht davon aus, dass in der XML-Datei die Satzarten mit der Fremdschlüsselbeziehung
                 // immer nach der Satzart steht, auf die die Beziehung zeigt, damit die Event-Registrierung klappt    
@@ -73,7 +73,7 @@ namespace Datengenerator
                 {
                     datei.Generieren();
                 }
-            });
+            }
 
             Logger.SchlechtfelderSpeichern();
 

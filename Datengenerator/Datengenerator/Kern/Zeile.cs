@@ -44,14 +44,19 @@ namespace Datengenerator.Kern
                             && Feldliste[feldXml.Descendants("BedingungFeld").Select(m => m.Value).First()] != feldXml.Descendants("BedingungWert").Select(m => m.Value).First())
                         ||
                         (feld.Art == Feldart.K // Kann-Feld
-                            && Random.Next(0, 2) == 0)
-                        ||
-                        (feld.Art == Feldart.M && Konfiguration.SchlechtdatenWahrscheinlichkeit > 0 // Muss-Feld und Schlechtdaten aktiviert
-                            && Random.Next(0, Konfiguration.SchlechtdatenWahrscheinlichkeit) == 0)
+                            && Random.Next(0, 2) == 0)                        
                        )
                     {
                         zeile += "" + Konfiguration.Feldtrennzeichen;
                         Feldliste.Add(feld.Nummer, "");
+                    }
+                    else if (feld.Art == Feldart.M && Konfiguration.SchlechtdatenWahrscheinlichkeit > 0 // Muss-Feld und Schlechtdaten aktiviert
+                            && Random.Next(0, Konfiguration.SchlechtdatenWahrscheinlichkeit) == 0)
+                    {
+                        zeile += "" + Konfiguration.Feldtrennzeichen;
+                        Feldliste.Add(feld.Nummer, "");
+
+                        Logger.LoggenSchlechtfeld(new Schlechtfeld { Dateiname = dateiname, Zeile = zeilennummer + 1, Feld = feld.Nummer });
                     }
                     else
                     {
