@@ -5,8 +5,11 @@ namespace Datengenerator.Kern
 {
     class FeldPLZ : Feld
     {
+        public string SchlüsselverzeichnisName;
+
         public FeldPLZ(XElement xml, Random r) : base(xml, r)
         {
+            SchlüsselverzeichnisName = "PLZ";
         }
 
         public override string Generieren(out bool schlecht)
@@ -19,7 +22,7 @@ namespace Datengenerator.Kern
             else
             {
                 schlecht = false;
-                return string.Format("{0:00000}", Random.Next(1000, 100000));
+                return Schlüsselverzeichnismanager.ZufälligerEintrag(SchlüsselverzeichnisName);
             }
         }
     }
