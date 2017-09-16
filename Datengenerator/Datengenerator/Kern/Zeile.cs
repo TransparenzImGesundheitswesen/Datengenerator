@@ -95,7 +95,7 @@ namespace Datengenerator.Kern
                             else if (feldXml.Attributes("Typ").First().Value == "GebrZahl")
                                 feld = new FeldGebrZahl(feldXml, Random);
                             else if (feldXml.Attributes("Typ").First().Value == "Freitext")
-                                feld = new FeldFreitext(feldXml, Random);
+                                feld = new FeldFreitext(feldXml, Random, Dateiattribute);
                         }
 
                         string wert = feld.Generieren(out bool schlecht);

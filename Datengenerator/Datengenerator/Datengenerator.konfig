@@ -7,9 +7,10 @@ Validieren: 0
 SchlechtdatenWahrscheinlichkeit: 0
 SchlechtdatenWahrscheinlichkeitFremdschlüssel: 0
 
-AnzahlZeilen: 2
+AnzahlZeilen: 1
 
 Quartalsliste:20161
 
+_Vertragskennung:ABC;DEF;GHI
 _Quartal:20161
 _Version:001
