@@ -41,6 +41,19 @@ namespace Datengenerator
             Konfiguration.Zeichensatz = xml.Descendants("Dateikonventionen").Descendants("Zeichensatz").Select(m => m.Value).First();
             Konfiguration.Dateiname = xml.Descendants("Dateikonventionen").Descendants("Dateiname").Select(m => m.Value).First();
 
+            if (xml.Descendants("Dateikonventionen").Descendants("Auffüllen").Any())
+            {
+                foreach (XElement auffüllenXml in xml.Descendants("Dateikonventionen").Elements("Auffüllen"))
+                {
+                    DateiattributAuffüllen auffüllen = new DateiattributAuffüllen();
+                    auffüllen.Attribut = auffüllenXml.Element("Attribut").Value;
+                    auffüllen.Länge = int.Parse(auffüllenXml.Element("Länge").Value);
+                    auffüllen.Zeichen = auffüllenXml.Element("Zeichen").Value;
+
+                    Konfiguration.Auffüllen.Add(auffüllen);
+                }
+            }
+
             string feldtrennzeichen = xml.Descendants("Dateikonventionen").Descendants("Feldtrennzeichen").Select(m => m.Value).First();
             if (feldtrennzeichen.StartsWith("0x"))
                 foreach (string zeichen in feldtrennzeichen.Split(' '))

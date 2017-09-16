@@ -48,7 +48,15 @@ namespace Datengenerator.Kern
             this.dateiattribute = dateiattribute;
 
             foreach (string attribut in dateiattribute.Keys)
-                dateiname = dateiname.Replace(string.Format("{{{0}}}", attribut), dateiattribute[attribut]);
+            {
+                string att = dateiattribute[attribut];
+
+                if (Konfiguration.Auffüllen.Where(m => m.Attribut == attribut).Any())
+                    while (att.Length < Konfiguration.Auffüllen.Where(m => m.Attribut == attribut).First().Länge)
+                        att += Konfiguration.Auffüllen.Where(m => m.Attribut == attribut).First().Zeichen;
+
+                dateiname = dateiname.Replace(string.Format("{{{0}}}", attribut), att);
+            }
         }
 
         public void Generieren()

@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Datengenerator.cs" />
     <Compile Include="Kern\Datei.cs" />
+    <Compile Include="Kern\DateiattributAuffüllen.cs" />
     <Compile Include="Kern\Feldtypen\Feld.cs" />
     <Compile Include="Kern\Feldtypen\Feldart.cs" />
     <Compile Include="Kern\Feldtypen\Feldeigenschaft.cs" />

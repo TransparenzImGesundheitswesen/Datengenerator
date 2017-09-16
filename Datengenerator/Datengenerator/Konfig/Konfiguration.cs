@@ -19,6 +19,7 @@ namespace Datengenerator.Konfig
         public static string Feldtrennzeichen = "";
         public static string Zeilentrennzeichen = "";
         private static string dateiname = "";
+        public static List<DateiattributAuffüllen> Auffüllen = new List<DateiattributAuffüllen>();
         public static string Pfad = "";
 
         public static List<string> Quartalsliste = new List<string>();
