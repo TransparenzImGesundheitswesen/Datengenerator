@@ -65,6 +65,8 @@ namespace Datengenerator.Kern
                             rückgabe = Konfiguration.Quartalsliste[Random.Next(0, Konfiguration.Quartalsliste.Count)];
                         else if (Dateiattribute.Keys.Contains("Jahr"))
                             rückgabe = string.Format("{0}{1}", Dateiattribute["Jahr"], Random.Next(1, 5));
+                        else if (Dateiattribute.Keys.Contains("Quartal"))
+                            rückgabe = Dateiattribute["Quartal"];
                         else
                             rückgabe = string.Format("2017{0}", Random.Next(1, 5));
                     } while (GrößerGleich != null && string.Compare(Feldliste[GrößerGleich], rückgabe) > 0 && Feldliste[GrößerGleich] != "QQQQQ");

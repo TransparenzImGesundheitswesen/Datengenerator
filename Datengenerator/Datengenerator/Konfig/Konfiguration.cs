@@ -38,8 +38,12 @@ namespace Datengenerator.Konfig
                 if (komponenten[0].StartsWith("_"))
                 {
                     string attribut = komponenten[0].Replace("_", "");
-                    List<string> werte = komponenten[1].Split(';').ToList();
-                    Dateiattribute.Add(attribut, werte);
+
+                    if (komponenten[1].Length > 0)
+                    {
+                        List<string> werte = komponenten[1].Split(';').ToList();
+                        Dateiattribute.Add(attribut, werte);
+                    }
                 }
 
 
@@ -64,7 +68,8 @@ namespace Datengenerator.Konfig
                         AnzahlZeilen = int.Parse(komponenten[1].Trim());
                         break;
                     case "Quartalsliste":
-                        Quartalsliste = komponenten[1].Split(';').ToList();
+                        if (komponenten[1].Length > 0)
+                            Quartalsliste = komponenten[1].Split(';').ToList();
                         break;
                 }
             }

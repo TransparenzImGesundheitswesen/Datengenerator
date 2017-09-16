@@ -9,8 +9,8 @@ SchlechtdatenWahrscheinlichkeitFremdschlüssel: 0
 
 AnzahlZeilen: 1
 
-Quartalsliste:20161
+Quartalsliste:
 
 _Vertragskennung:ABC;DEF;GHI
-_Quartal:20161
+_Quartal:20161;20162;20163;20164
 _Version:001
