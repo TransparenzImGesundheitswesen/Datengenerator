@@ -22,7 +22,7 @@ namespace Datengenerator.Kern
 
         private int zeilennummer = 0;
 
-        public Datei(XElement satzartXml, List<Datei> alleDateien, Dictionary<string, string> dateiattribute)
+        public Datei(XElement satzartXml, List<Datei> alleDateien, Dictionary<string, string> dateiattribute, string rsn)
         {
             this.satzartXml = satzartXml;
 
@@ -57,6 +57,11 @@ namespace Datengenerator.Kern
 
                 dateiname = dateiname.Replace(string.Format("{{{0}}}", attribut), att);
             }
+
+            if (rsn != null)
+                dateiname = string.Format("{0}.", rsn) + dateiname;
+            if (Konfiguration.LieferantenIK != null)
+                dateiname += string.Format(".{0}", Konfiguration.LieferantenIK);
         }
 
         public void Generieren()

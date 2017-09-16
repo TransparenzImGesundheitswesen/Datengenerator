@@ -24,6 +24,9 @@ namespace Datengenerator.Konfig
 
         public static List<string> Quartalsliste = new List<string>();
 
+        public static string LieferantenIK;
+        public static readonly bool RSN;
+
         public static Dictionary<string, List<string>> Dateiattribute = new Dictionary<string, List<string>>();
         public static List<Dictionary<string, string>> DateiattributeKombinationen = new List<Dictionary<string, string>>();
 
@@ -71,6 +74,13 @@ namespace Datengenerator.Konfig
                     case "Quartalsliste":
                         if (komponenten[1].Length > 0)
                             Quartalsliste = komponenten[1].Split(';').ToList();
+                        break;
+                    case "LieferantenIK":
+                        if (komponenten[1].Length > 0)
+                            LieferantenIK = komponenten[1];
+                        break;
+                    case "RSN":
+                        RSN = Convert.ToBoolean(int.Parse(komponenten[1].Trim()));
                         break;
                 }
             }
