@@ -144,8 +144,19 @@ namespace Datengenerator.Kern
 
                     return string.Format("{0}{1}{2:00}", jahr, monat, Random.Next(1, 28));
                 }
+                else if (GrößerGleich != null)
+                {
+                    string rückgabe;
+
+                    do
+                    {
+                        rückgabe = string.Format("20{0:00}{1:00}{2:00}", 12 + Random.Next(1, 5), Random.Next(1, 13), Random.Next(1, 28));
+                    } while (GrößerGleich != null && string.Compare(Feldliste[GrößerGleich], rückgabe) > 0 && Feldliste[GrößerGleich] != "JJJJ" && Feldliste[GrößerGleich] != "");
+
+                    return rückgabe;
+                }
                 else
-                    return string.Format("2017{0:00}{1:00}", Random.Next(1, 13), Random.Next(1, 28));
+                    return string.Format("20{0:00}{1:00}{2:00}", 12 + Random.Next(1, 5), Random.Next(1, 13), Random.Next(1, 28));
             }
         }
     }
