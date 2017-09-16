@@ -7,9 +7,9 @@ Validieren: 0
 SchlechtdatenWahrscheinlichkeit: 0
 SchlechtdatenWahrscheinlichkeitFremdschlüssel: 0
 
-AnzahlZeilen: 10
+AnzahlZeilen: 2
 
-Quartalsliste:20161;20162;20163;20164
+Quartalsliste:20161
 
-_Jahr:2016
+_Quartal:20161
 _Version:001

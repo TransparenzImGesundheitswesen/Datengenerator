@@ -90,6 +90,8 @@ namespace Datengenerator.Kern
                                 feld = new FeldGOP(feldXml, Random);
                             else if (feldXml.Attributes("Typ").First().Value == "Ganzzahl")
                                 feld = new FeldGanzzahl(feldXml, Random);
+                            else if (feldXml.Attributes("Typ").First().Value == "LaufendeNr")
+                                feld = new FeldLaufendeNr(feldXml, Random);
                             else if (feldXml.Attributes("Typ").First().Value == "GebrZahl")
                                 feld = new FeldGebrZahl(feldXml, Random);
                             else if (feldXml.Attributes("Typ").First().Value == "Freitext")

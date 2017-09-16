@@ -50,6 +50,7 @@
     <Compile Include="Kern\Feldtypen\FeldEnum.cs" />
     <Compile Include="Kern\Feldtypen\FeldFGCode.cs" />
     <Compile Include="Kern\Feldtypen\FeldFreitext.cs" />
+    <Compile Include="Kern\Feldtypen\FeldLaufendeNr.cs" />
     <Compile Include="Kern\Feldtypen\FeldGanzzahl.cs" />
     <Compile Include="Kern\Feldtypen\FeldGebrZahl.cs" />
     <Compile Include="Kern\Feldtypen\FeldGOP.cs" />

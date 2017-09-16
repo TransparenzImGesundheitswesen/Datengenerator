@@ -85,7 +85,7 @@ namespace Datengenerator.Kern
 
                 OnZeileGeneriert(new ZeileGeneriertEventArgs(primärschlüssel));
 
-                if (zeilennummer % 1000 == 0)
+                if (zeilennummer % 1 == 0)
                 {
                     string ausgabe = "";
                     foreach (string schlüssel in dateiattribute.Keys)
