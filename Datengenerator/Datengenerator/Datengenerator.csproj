@@ -58,6 +58,7 @@
     <Compile Include="Kern\Feldtypen\FeldIK.cs" />
     <Compile Include="Kern\Feldtypen\FeldKalTag.cs" />
     <Compile Include="Kern\Feldtypen\FeldKonstant.cs" />
+    <Compile Include="Kern\Feldtypen\FeldKVVektor.cs" />
     <Compile Include="Kern\Feldtypen\FeldKV.cs" />
     <Compile Include="Kern\Feldtypen\FeldPLZ.cs" />
     <Compile Include="Kern\Feldtypen\FeldQuartalDatum.cs" />
@@ -96,7 +97,13 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="XML-Testdateien\KalTag.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="XML-Testdateien\PLZ.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="XML-Testdateien\Schlüsselverzeichnis_8.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -106,6 +113,10 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="XML-Testdateien\SV.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

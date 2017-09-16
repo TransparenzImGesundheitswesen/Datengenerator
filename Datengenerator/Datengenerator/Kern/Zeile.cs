@@ -74,6 +74,8 @@ namespace Datengenerator.Kern
                                 feld = new FeldIK(feldXml, Random, Dateiattribute);
                             else if (feldXml.Attributes("Typ").First().Value == "KV")
                                 feld = new FeldKV(feldXml, Random);
+                            else if (feldXml.Attributes("Typ").First().Value == "KVVektor")
+                                feld = new FeldKVVektor(feldXml, Random);
                             else if (feldXml.Attributes("Typ").First().Value == "PLZ")
                                 feld = new FeldPLZ(feldXml, Random);
                             else if (feldXml.Attributes("Typ").First().Value == "KalTag")
