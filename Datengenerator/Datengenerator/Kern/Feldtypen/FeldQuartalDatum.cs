@@ -33,12 +33,44 @@ namespace Datengenerator.Kern
         {
             switch (Format)
             {
+                case "JJJJ":
+                    return GenerierenJahr(out schlecht);
                 case "JJJJQ":
                     return GenerierenQuartal(out schlecht);
                 case "JJJJMMTT":
                     return GenerierenDatum(out schlecht);
                 default:
                     throw new NotImplementedException();
+            }
+        }
+
+        private string GenerierenJahr(out bool schlecht)
+        {
+            if (SchlechtdatenGenerieren && Random.Next(0, SchlechtdatenWahrscheinlichkeit) == 0)
+            {
+                schlecht = true;
+                return "JJJJ";
+            }
+            else
+            {
+                schlecht = false;
+
+                if (Name.Contains("Geburts"))
+                    return string.Format("{0}", 1950 + Random.Next(0, 60));
+                else
+                {
+                    string rückgabe;
+
+                    do
+                    {
+                        if (Dateiattribute.Keys.Contains("Jahr"))
+                            rückgabe = string.Format("{0}", Dateiattribute["Jahr"]);
+                        else
+                            rückgabe = string.Format("{0}", 1950 + Random.Next(0, 60));
+                    } while (GrößerGleich != null && string.Compare(Feldliste[GrößerGleich], rückgabe) > 0 && Feldliste[GrößerGleich] != "JJJJ" && Feldliste[GrößerGleich] != "");
+
+                    return rückgabe;
+                }
             }
         }
 
