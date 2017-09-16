@@ -23,7 +23,11 @@ namespace Datengenerator.Kern
             else
             {
                 schlecht = false;
-                return Random.Next(1, 32).ToString();
+
+                if (Schlüsselverzeichnismanager.Schlüsselverzeichnisnamen.Contains("KalTag"))
+                    return Schlüsselverzeichnismanager.ZufälligerEintrag("KalTag");
+                else
+                    return Random.Next(1, 32).ToString();
             }
         }
     }
