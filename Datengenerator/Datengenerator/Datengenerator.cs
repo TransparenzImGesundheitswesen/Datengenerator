@@ -45,10 +45,12 @@ namespace Datengenerator
             {
                 foreach (XElement auffüllenXml in xml.Descendants("Dateikonventionen").Elements("Auffüllen"))
                 {
-                    DateiattributAuffüllen auffüllen = new DateiattributAuffüllen();
-                    auffüllen.Attribut = auffüllenXml.Element("Attribut").Value;
-                    auffüllen.Länge = int.Parse(auffüllenXml.Element("Länge").Value);
-                    auffüllen.Zeichen = auffüllenXml.Element("Zeichen").Value;
+                    DateiattributAuffüllen auffüllen = new DateiattributAuffüllen
+                    {
+                        Attribut = auffüllenXml.Element("Attribut").Value,
+                        Länge = int.Parse(auffüllenXml.Element("Länge").Value),
+                        Zeichen = auffüllenXml.Element("Zeichen").Value
+                    };
 
                     Konfiguration.Auffüllen.Add(auffüllen);
                 }
