@@ -19,9 +19,13 @@ namespace Datengenerator.Konfig
         public static string Feldtrennzeichen = "";
         public static string Zeilentrennzeichen = "";
         private static string dateiname = "";
+        public static List<DateiattributAuffüllen> Auffüllen = new List<DateiattributAuffüllen>();
         public static string Pfad = "";
 
         public static List<string> Quartalsliste = new List<string>();
+
+        public static string LieferantenIK;
+        public static readonly bool RSN;
 
         public static Dictionary<string, List<string>> Dateiattribute = new Dictionary<string, List<string>>();
         public static List<Dictionary<string, string>> DateiattributeKombinationen = new List<Dictionary<string, string>>();
@@ -38,8 +42,12 @@ namespace Datengenerator.Konfig
                 if (komponenten[0].StartsWith("_"))
                 {
                     string attribut = komponenten[0].Replace("_", "");
-                    List<string> werte = komponenten[1].Split(';').ToList();
-                    Dateiattribute.Add(attribut, werte);
+
+                    if (komponenten[1].Length > 0)
+                    {
+                        List<string> werte = komponenten[1].Split(';').ToList();
+                        Dateiattribute.Add(attribut, werte);
+                    }
                 }
 
 
@@ -64,7 +72,15 @@ namespace Datengenerator.Konfig
                         AnzahlZeilen = int.Parse(komponenten[1].Trim());
                         break;
                     case "Quartalsliste":
-                        Quartalsliste = komponenten[1].Split(';').ToList();
+                        if (komponenten[1].Length > 0)
+                            Quartalsliste = komponenten[1].Split(';').ToList();
+                        break;
+                    case "LieferantenIK":
+                        if (komponenten[1].Length > 0)
+                            LieferantenIK = komponenten[1];
+                        break;
+                    case "RSN":
+                        RSN = Convert.ToBoolean(int.Parse(komponenten[1].Trim()));
                         break;
                 }
             }

@@ -74,6 +74,8 @@ namespace Datengenerator.Kern
                                 feld = new FeldIK(feldXml, Random, Dateiattribute);
                             else if (feldXml.Attributes("Typ").First().Value == "KV")
                                 feld = new FeldKV(feldXml, Random);
+                            else if (feldXml.Attributes("Typ").First().Value == "KVVektor")
+                                feld = new FeldKVVektor(feldXml, Random);
                             else if (feldXml.Attributes("Typ").First().Value == "PLZ")
                                 feld = new FeldPLZ(feldXml, Random);
                             else if (feldXml.Attributes("Typ").First().Value == "KalTag")
@@ -88,10 +90,12 @@ namespace Datengenerator.Kern
                                 feld = new FeldGOP(feldXml, Random);
                             else if (feldXml.Attributes("Typ").First().Value == "Ganzzahl")
                                 feld = new FeldGanzzahl(feldXml, Random);
+                            else if (feldXml.Attributes("Typ").First().Value == "LaufendeNr")
+                                feld = new FeldLaufendeNr(feldXml, Random);
                             else if (feldXml.Attributes("Typ").First().Value == "GebrZahl")
                                 feld = new FeldGebrZahl(feldXml, Random);
                             else if (feldXml.Attributes("Typ").First().Value == "Freitext")
-                                feld = new FeldFreitext(feldXml, Random);
+                                feld = new FeldFreitext(feldXml, Random, Dateiattribute);
                         }
 
                         string wert = feld.Generieren(out bool schlecht);

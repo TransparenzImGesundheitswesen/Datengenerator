@@ -3,10 +3,13 @@ using System.Xml.Linq;
 
 namespace Datengenerator.Kern
 {
-    class FeldKalTag : Feld
+    class FeldLaufendeNr : Feld
     {
-        public FeldKalTag(XElement xml, Random r) : base(xml, r)
+        private int stellen;
+
+        public FeldLaufendeNr(XElement xml, Random r) : base(xml, r)
         {
+            stellen = int.Parse(xml.Element("Stellen").Value.Replace("<=", ""));
         }
 
         public override string Generieren(out bool schlecht)
@@ -16,18 +19,16 @@ namespace Datengenerator.Kern
                 schlecht = true;
 
                 if (Random.Next(0, 2) == 0)
-                    return "0";
+                    return "ABC";
                 else
-                    return "32";
+                    return "3,14";
             }
             else
             {
                 schlecht = false;
 
-                if (Schlüsselverzeichnismanager.Schlüsselverzeichnisnamen.Contains("KalTag"))
-                    return Schlüsselverzeichnismanager.ZufälligerEintrag("KalTag");
-                else
-                    return Random.Next(1, 32).ToString();
+                int max = (int)Math.Pow(10, stellen);
+                return Random.Next(1, max).ToString();
             }
         }
     }

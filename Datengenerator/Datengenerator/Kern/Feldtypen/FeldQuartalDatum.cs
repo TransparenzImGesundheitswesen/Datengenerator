@@ -33,12 +33,44 @@ namespace Datengenerator.Kern
         {
             switch (Format)
             {
+                case "JJJJ":
+                    return GenerierenJahr(out schlecht);
                 case "JJJJQ":
                     return GenerierenQuartal(out schlecht);
                 case "JJJJMMTT":
                     return GenerierenDatum(out schlecht);
                 default:
                     throw new NotImplementedException();
+            }
+        }
+
+        private string GenerierenJahr(out bool schlecht)
+        {
+            if (SchlechtdatenGenerieren && Random.Next(0, SchlechtdatenWahrscheinlichkeit) == 0)
+            {
+                schlecht = true;
+                return "JJJJ";
+            }
+            else
+            {
+                schlecht = false;
+
+                if (Name.Contains("Geburts"))
+                    return string.Format("{0}", 1950 + Random.Next(0, 60));
+                else
+                {
+                    string rückgabe;
+
+                    do
+                    {
+                        if (Dateiattribute.Keys.Contains("Jahr"))
+                            rückgabe = string.Format("{0}", Dateiattribute["Jahr"]);
+                        else
+                            rückgabe = string.Format("{0}", 1950 + Random.Next(0, 60));
+                    } while (GrößerGleich != null && string.Compare(Feldliste[GrößerGleich], rückgabe) > 0 && Feldliste[GrößerGleich] != "JJJJ" && Feldliste[GrößerGleich] != "");
+
+                    return rückgabe;
+                }
             }
         }
 
@@ -65,6 +97,8 @@ namespace Datengenerator.Kern
                             rückgabe = Konfiguration.Quartalsliste[Random.Next(0, Konfiguration.Quartalsliste.Count)];
                         else if (Dateiattribute.Keys.Contains("Jahr"))
                             rückgabe = string.Format("{0}{1}", Dateiattribute["Jahr"], Random.Next(1, 5));
+                        else if (Dateiattribute.Keys.Contains("Quartal"))
+                            rückgabe = Dateiattribute["Quartal"];
                         else
                             rückgabe = string.Format("2017{0}", Random.Next(1, 5));
                     } while (GrößerGleich != null && string.Compare(Feldliste[GrößerGleich], rückgabe) > 0 && Feldliste[GrößerGleich] != "QQQQQ");
@@ -110,8 +144,19 @@ namespace Datengenerator.Kern
 
                     return string.Format("{0}{1}{2:00}", jahr, monat, Random.Next(1, 28));
                 }
+                else if (GrößerGleich != null)
+                {
+                    string rückgabe;
+
+                    do
+                    {
+                        rückgabe = string.Format("20{0:00}{1:00}{2:00}", 12 + Random.Next(1, 5), Random.Next(1, 13), Random.Next(1, 28));
+                    } while (GrößerGleich != null && string.Compare(Feldliste[GrößerGleich], rückgabe) > 0 && Feldliste[GrößerGleich] != "JJJJ" && Feldliste[GrößerGleich] != "");
+
+                    return rückgabe;
+                }
                 else
-                    return string.Format("2017{0:00}{1:00}", Random.Next(1, 13), Random.Next(1, 28));
+                    return string.Format("20{0:00}{1:00}{2:00}", 12 + Random.Next(1, 5), Random.Next(1, 13), Random.Next(1, 28));
             }
         }
     }

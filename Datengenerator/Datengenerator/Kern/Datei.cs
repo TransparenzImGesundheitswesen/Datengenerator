@@ -22,7 +22,7 @@ namespace Datengenerator.Kern
 
         private int zeilennummer = 0;
 
-        public Datei(XElement satzartXml, List<Datei> alleDateien, Dictionary<string, string> dateiattribute)
+        public Datei(XElement satzartXml, List<Datei> alleDateien, Dictionary<string, string> dateiattribute, string rsn)
         {
             this.satzartXml = satzartXml;
 
@@ -48,7 +48,20 @@ namespace Datengenerator.Kern
             this.dateiattribute = dateiattribute;
 
             foreach (string attribut in dateiattribute.Keys)
-                dateiname = dateiname.Replace(string.Format("{{{0}}}", attribut), dateiattribute[attribut]);
+            {
+                string att = dateiattribute[attribut];
+
+                if (Konfiguration.Auffüllen.Where(m => m.Attribut == attribut).Any())
+                    while (att.Length < Konfiguration.Auffüllen.Where(m => m.Attribut == attribut).First().Länge)
+                        att += Konfiguration.Auffüllen.Where(m => m.Attribut == attribut).First().Zeichen;
+
+                dateiname = dateiname.Replace(string.Format("{{{0}}}", attribut), att);
+            }
+
+            if (rsn != null)
+                dateiname = string.Format("{0}.", rsn) + dateiname;
+            if (Konfiguration.LieferantenIK != null)
+                dateiname += string.Format(".{0}", Konfiguration.LieferantenIK);
         }
 
         public void Generieren()
@@ -85,7 +98,7 @@ namespace Datengenerator.Kern
 
                 OnZeileGeneriert(new ZeileGeneriertEventArgs(primärschlüssel));
 
-                if (zeilennummer % 1000 == 0)
+                if (zeilennummer % 1 == 0)
                 {
                     string ausgabe = "";
                     foreach (string schlüssel in dateiattribute.Keys)
