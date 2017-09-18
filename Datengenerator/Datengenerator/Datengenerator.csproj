@@ -77,6 +77,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Datengenerator_ASV.konfig">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Datengenerator.konfig">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
