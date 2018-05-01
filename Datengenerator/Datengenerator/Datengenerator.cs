@@ -70,7 +70,7 @@ namespace Datengenerator
             else
                 Konfiguration.Zeilentrennzeichen = zeilentrennzeichen;
 
-            int rsn = 1000;
+            int rsn = 2000;
             foreach (Dictionary<string, string> dateiattribute in Konfiguration.DateiattributeKombinationen)
             //Parallel.ForEach(Konfiguration.DateiattributeKombinationen, dateiattribute =>
             {

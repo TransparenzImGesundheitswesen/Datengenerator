@@ -80,10 +80,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Datengenerator.konfig">
+    <None Include="Datengenerator_ASV.konfig">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Datengenerator_SV.konfig">
+    <None Include="Datengenerator.konfig">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="XML-Testdateien\FGCode.csv">
@@ -121,6 +121,7 @@
   <ItemGroup>
     <Content Include="XML-Testdateien\SV.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

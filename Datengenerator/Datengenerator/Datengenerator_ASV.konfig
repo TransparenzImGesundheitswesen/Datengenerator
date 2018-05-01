@@ -1,19 +1,18 @@
 ﻿XSD: XML-Testdateien/ASV.xsd
-XML: XML-Testdateien/SV.xml
+XML: XML-Testdateien/ASV.xml
 
-Validieren: 0
+Validieren: 1
 
 # Zulässige Werte: 0 oder das N in 1/N
 SchlechtdatenWahrscheinlichkeit: 0
 SchlechtdatenWahrscheinlichkeitFremdschlüssel: 0
 
-AnzahlZeilen: 1
+AnzahlZeilen: 5000
 
-Quartalsliste:
+Quartalsliste:20151;20152;20153;20154;20161;20162;20163;20164;20171;20172
 
 LieferantenIK:109911114
 RSN:1000
 
-_Vertragskennung:ABC;DEF;GHI
-_Quartal:20161;20162;20163;20164
-_Version:001
+_Jahr:2017
+_Version:006
