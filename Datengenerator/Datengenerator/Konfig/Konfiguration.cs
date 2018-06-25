@@ -11,6 +11,7 @@ namespace Datengenerator.Konfig
         public static readonly List<string> Xsd = new List<string>();
         public static readonly string Xml;
         public static readonly bool Validieren;
+        public static readonly bool Reproduzierbar;
         public static readonly int SchlechtdatenWahrscheinlichkeit;
         public static readonly int SchlechtdatenWahrscheinlichkeitFremdschlüssel;
         public static readonly int AnzahlZeilen;
@@ -61,6 +62,9 @@ namespace Datengenerator.Konfig
                         break;
                     case "Validieren":
                         Validieren = Convert.ToBoolean(int.Parse(komponenten[1].Trim()));
+                        break;
+                    case "Reproduzierbar":
+                        Reproduzierbar = Convert.ToBoolean(int.Parse(komponenten[1].Trim()));
                         break;
                     case "SchlechtdatenWahrscheinlichkeit":
                         SchlechtdatenWahrscheinlichkeit = int.Parse(komponenten[1].Trim());

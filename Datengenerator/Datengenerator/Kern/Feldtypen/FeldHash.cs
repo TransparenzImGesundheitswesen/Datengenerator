@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Xml.Linq;
@@ -26,15 +27,7 @@ namespace Datengenerator.Kern
             {
                 schlecht = false;
 
-                RIPEMD160 ripe = RIPEMD160.Create();
-                byte[] bytes = Encoding.ASCII.GetBytes(Guid.NewGuid().ToString());
-                byte[] hash = ripe.ComputeHash(bytes);
-
-                StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < hash.Length; i++)
-                    sb.Append(hash[i].ToString("X2"));
-
-                return sb.ToString();
+                return string.Concat(Enumerable.Range(0, 40).Select(_ => Random.Next(16).ToString("X")));
             }
         }
     }

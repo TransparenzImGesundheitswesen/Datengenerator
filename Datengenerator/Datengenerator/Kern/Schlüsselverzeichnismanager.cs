@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Datengenerator.Konfig;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
@@ -16,7 +17,7 @@ namespace Datengenerator.Kern
         {
             Schlüsselverzeichnisse = new List<Schlüsselverzeichnis>();
             Schlüsselverzeichnisnamen = new List<string>();
-            random = new Random();
+            random = Konfiguration.Reproduzierbar ? new Random(1) : new Random();
         }
 
         public static void SchlüsselverzeichnisseHinzufügen(IEnumerable<XElement> schlüsselverzeichnisseXml)

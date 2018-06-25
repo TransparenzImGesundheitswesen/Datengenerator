@@ -17,8 +17,8 @@ namespace Datengenerator.Kern
         private List<string> fremdschlüsselfelder;
         private Dictionary<string, string> dateiattribute;
 
-        private Random r = new Random();
-        private RandomProportional rp = new RandomProportional();
+        private Random r = Konfiguration.Reproduzierbar ? new Random(1) : new Random();
+        private RandomProportional rp = Konfiguration.Reproduzierbar ? new RandomProportional(1) : new RandomProportional();
 
         private int zeilennummer = 0;
 
