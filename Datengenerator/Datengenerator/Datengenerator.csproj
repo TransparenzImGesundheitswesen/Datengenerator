@@ -80,10 +80,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Datengenerator_ASV.konfig">
+    <None Include="Datengenerator.konfig">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Datengenerator.konfig">
+    <None Include="Datengenerator_SV.konfig">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="XML-Testdateien\FGCode.csv">
