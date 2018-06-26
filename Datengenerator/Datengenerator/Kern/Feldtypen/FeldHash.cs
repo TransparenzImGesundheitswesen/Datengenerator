@@ -21,7 +21,14 @@ namespace Datengenerator.Kern
                 if (Random.Next(0, 2) == 0)
                     return "ABCDEF";
                 else
-                    return "F5E3155D5FF487546DF7E1ABFZF1BE479942E665"; // enthält ein Z
+                {
+                    string s = string.Concat(Enumerable.Range(0, 40).Select(_ => Random.Next(16).ToString("X")));
+
+                    StringBuilder sb = new StringBuilder(s);
+                    sb[Random.Next(s.Length)] = 'Z';
+
+                    return sb.ToString();
+                }
             }
             else
             {
