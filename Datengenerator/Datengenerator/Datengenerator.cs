@@ -70,7 +70,7 @@ namespace Datengenerator
             else
                 Konfiguration.Zeilentrennzeichen = zeilentrennzeichen;
 
-            int rsn = 2000;
+            //int rsn = 2000;
             foreach (Dictionary<string, string> dateiattribute in Konfiguration.DateiattributeKombinationen)
             //Parallel.ForEach(Konfiguration.DateiattributeKombinationen, dateiattribute =>
             {
@@ -81,7 +81,7 @@ namespace Datengenerator
 
                 foreach (XElement satzartXml in satzartenXml.Elements("Satzart"))
                 {
-                    Datei datei = new Datei(satzartXml, alleDateien, dateiattribute, (Konfiguration.RSN ? rsn++.ToString() : null));
+                    Datei datei = new Datei(satzartXml, alleDateien, dateiattribute, (Konfiguration.RSN > 0 ? Konfiguration.RSN++.ToString() : null));
                     alleDateien.Add(datei);
                 }
 
