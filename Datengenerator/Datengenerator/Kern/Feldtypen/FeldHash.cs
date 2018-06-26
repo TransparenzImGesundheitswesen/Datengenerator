@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Datengenerator.Konfig;
+using System;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -22,7 +23,7 @@ namespace Datengenerator.Kern
                     return "ABCDEF";
                 else
                 {
-                    string s = string.Concat(Enumerable.Range(0, 40).Select(_ => Random.Next(16).ToString("X")));
+                    string s = string.Concat(Enumerable.Range(0, Konfiguration.Hashlänge).Select(_ => Random.Next(16).ToString("X")));
 
                     StringBuilder sb = new StringBuilder(s);
                     sb[Random.Next(s.Length)] = 'Z';
@@ -34,7 +35,7 @@ namespace Datengenerator.Kern
             {
                 schlecht = false;
 
-                return string.Concat(Enumerable.Range(0, 40).Select(_ => Random.Next(16).ToString("X")));
+                return string.Concat(Enumerable.Range(0, Konfiguration.Hashlänge).Select(_ => Random.Next(16).ToString("X")));
             }
         }
     }

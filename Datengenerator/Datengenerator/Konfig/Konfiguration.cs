@@ -14,6 +14,7 @@ namespace Datengenerator.Konfig
         public static readonly bool Reproduzierbar;
         public static readonly int SchlechtdatenWahrscheinlichkeit;
         public static readonly int SchlechtdatenWahrscheinlichkeitFremdschlüssel;
+        public static readonly int Hashlänge;
         public static readonly int AnzahlZeilen;
 
         public static string Zeichensatz = "";
@@ -71,6 +72,9 @@ namespace Datengenerator.Konfig
                         break;
                     case "SchlechtdatenWahrscheinlichkeitFremdschlüssel":
                         SchlechtdatenWahrscheinlichkeitFremdschlüssel = int.Parse(komponenten[1].Trim());
+                        break;
+                    case "Hashlänge":
+                        Hashlänge = int.Parse(komponenten[1].Trim());
                         break;
                     case "AnzahlZeilen":
                         AnzahlZeilen = int.Parse(komponenten[1].Trim());

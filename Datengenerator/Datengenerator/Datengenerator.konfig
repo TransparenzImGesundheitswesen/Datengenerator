@@ -8,6 +8,8 @@ Reproduzierbar: 1
 SchlechtdatenWahrscheinlichkeit: 0
 SchlechtdatenWahrscheinlichkeitFremdschlüssel: 0
 
+Hashlänge:40
+
 AnzahlZeilen: 5000
 
 Quartalsliste:20151;20152;20153;20154;20161;20162;20163;20164;20171;20172
