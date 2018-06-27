@@ -66,35 +66,9 @@ namespace Datengenerator.Kern
 
         public void Generieren()
         {
-            Dictionary<string, string> primärschlüssel = new Dictionary<string, string>();
-
             while (zeilennummer < Konfiguration.AnzahlZeilen)
             {
-                string primärschlüsselString = "";
-                Zeile zeile;
-                string zeileString;
-
-                do
-                {
-                    primärschlüssel.Clear();
-
-                    zeile = new Zeile(satzartXml.Element("Felder"), r, rp, dateiattribute);
-                    zeileString = zeile.Generieren(null, dateiname, zeilennummer);
-                    primärschlüsselString = "";
-
-                    if (primärschlüsselfelder != null)
-                        foreach (string feld in primärschlüsselfelder)
-                        {
-                            primärschlüsselString += zeile.Feldliste[feld];
-                            primärschlüssel.Add(feld, zeile.Feldliste[feld]);
-                        }
-                } while (primärschlüsselfelder != null && this.primärschlüssel.Contains(primärschlüsselString) && !(Konfiguration.SchlechtdatenWahrscheinlichkeit != 0 && r.Next(0, Konfiguration.SchlechtdatenWahrscheinlichkeit) == 0));
-
-                if (primärschlüsselfelder != null)
-                    this.primärschlüssel.Add(primärschlüsselString);
-
-                Schreiber.Schreiben(dateiname, zeileString);
-                zeilennummer++;
+                Dictionary<string, string> primärschlüssel = Generieren(null);
 
                 OnZeileGeneriert(new ZeileGeneriertEventArgs(primärschlüssel));
 
@@ -148,6 +122,13 @@ namespace Datengenerator.Kern
 
         void ZeileGenerieren(Dictionary<string, string> fremdschlüssel)
         {
+            Dictionary<string, string> primärschlüssel = Generieren(fremdschlüssel);
+
+            OnZeileGeneriert(new ZeileGeneriertEventArgs(primärschlüssel));
+        }
+
+        private Dictionary<string, string> Generieren(Dictionary<string, string> fremdschlüssel)
+        {
             string primärschlüsselString = "";
             Zeile zeile;
             string zeileString;
@@ -172,8 +153,7 @@ namespace Datengenerator.Kern
 
             Schreiber.Schreiben(dateiname, zeileString);
             zeilennummer++;
-
-            OnZeileGeneriert(new ZeileGeneriertEventArgs(primärschlüssel));
+            return primärschlüssel;
         }
     }
 }
